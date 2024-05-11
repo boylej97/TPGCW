@@ -1,0 +1,185 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    background-image: url('Images/course.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    position: relative;
+}
+
+/* Navigation Styles */
+nav {
+    position: absolute;
+    top: 65%;
+    left: 0;
+    width: 100%;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav ul li:last-child {
+    margin-right: 0;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #3cb371;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #2e8b57;
+}
+
+/* Welcome Section Styles */
+.welcome-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+/* Location and Hours Section Styles */
+.location-section,
+.hours-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.hours-section ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.hours-section ul li {
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.hours-section ul li span {
+    background-color: #f9f9f9;
+    padding: 5px 10px;
+}
+
+/* Book Now Button Styles */
+.book-now-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3cb371;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+/* Return Button Styles */
+.return-button {
+    position: absolute;
+    top: 65%;
+    right: 20px;
+}
+
+.return-button a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3cb371;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.return-button a:hover {
+    background-color: #2e8b57;
+}
+
+.book-now-button:hover {
+    background-color: #2e8b57;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #2e8b57;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Menu Category Styles */
+.menu-container {
+    display: flex;
+}
+
+.menu-column {
+    width: 50%;
+}
+/* Menu Category Styles */
+.menu-category {
+    width: 100%;
+    margin: 0 auto;
+    text-align: justify;
+}
+/* Menu Item Styles */
+.menu-item {
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    margin-bottom: 10px; /* Add space between menu items */
+}
+
+.menu-item strong {
+    font-weight: bold; /* Make menu item text bold */
+}
+.menu-info {
+    display: flex;
+    justify-content: space-between; /* Align items with space between them */
+    align-items: center; /* Center items vertically */
+}
+.menu-info strong {
+    flex-grow: 1; /* Allow the item name to grow */
+}
+.menu-item .price {
+    margin-top: 5px; /* Add space between item name and price */
+    font-weight: bold; /* Make price text bold */
+}
+
+.description {
+    margin-top: 5px;
+}
+
+/* Divider Styles */
+.menu-container::after {
+    content: "";
+    width: 2px;
+    background-color: #ccc;
+    margin: 0 10px;
+}
