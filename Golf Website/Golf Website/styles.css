@@ -173,13 +173,13 @@ footer {
 }
 
 .description {
-    margin-top: 5px;
+    margin-top: 5%;
 }
 
 /* Divider Styles */
 .menu-container::after {
     content: "";
     width: 2px;
-    background-color: #ccc;
+    background-color: #943838;
     margin: 0 10px;
 }
