@@ -1,62 +1,52 @@
 /* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Arial", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f8ff;
-    color: #333;
+    background-color: #f5f5f5; /* Light gray background */
+    color: #333; /* Dark gray text color */
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
+    width: 80%; /* Adjust container width for better readability */
+    margin: 0 auto; /* Center the container horizontally */
 }
 
 /* Header Styles */
 header {
-    background-image: url('Images/course.png');
+    background-image: url('Images/course.png'); /* Set the background image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 40px 0; /* Adjust header padding */
+    padding: 100px 0;
     position: relative;
 }
 
-
-/* Logo Styles */
-.logo-container {
-    display: flex;
-    justify-content: center; /* Center the logo horizontally */
-    align-items: center; /* Center the logo vertically */
-    margin-bottom: 20px; /* Add space between the logo and the navigation */
+.logo {
+    display: block; /* Make logo a block element */
+    text-align: center; /* Center the logo */
 }
 
-
-.logo-container img {
-    max-width: 100%; /* Ensure the logo image doesn't exceed its container */
+.logo img {
+    max-width: 200px; /* Adjust max width of the logo */
+    height: auto; /* Maintain aspect ratio */
 }
 
 /* Navigation Styles */
 nav {
-    position: relative; /* Change position to relative */
-    width: 100%;
-    padding-top: 20px; /* Add padding to the top of the navigation */
+    text-align: center; /* Center align navigation links */
+    margin-top: 20px; /* Add margin to separate header and navigation */
 }
 
 .nav-links {
     list-style-type: none;
-    padding: 0px;
-    text-align: center;
-    margin: 0; /* Remove default margin */
+    padding: 0;
+    margin: 0;
 }
 
 .nav-links li {
     display: inline-block;
     margin-right: 20px;
-    margin-bottom: 40px;
-    margin-top: 20px;
 }
 
 .nav-links li:last-child {
@@ -64,28 +54,132 @@ nav {
 }
 
 .nav-links li a {
-    color: #333;
+    color: #666; /* Dark gray link color */
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 10px 15px;
     border-radius: 5px;
-    background-color: #3cb371;
     transition: background-color 0.3s ease;
 }
 
 .nav-links li a:hover {
-    background-color: #2e8b57;
+    background-color: #f0f0f0; /* Light gray background on hover */
+    color: #333; /* Darken text color on hover */
+    
 }
 
-/* Media Query for Mobile Devices */
 @media only screen and (max-width: 600px) {
-    .logo-container {
-        padding-bottom: 20px; /* Increase padding below the logo on mobile */
+    .nav-links {
+        padding: 0; /* Remove padding */
+    }
+
+    .nav-links li {
+        margin-right: 10px; /* Reduce margin between links */
+    }
+
+    .nav-links li a {
+        padding: 8px 12px; /* Adjust padding */
+        font-size: 14px; /* Reduce font size */
     }
 }
+
 /* Welcome Section Styles */
-.kitchen_welcome {
+.welcome-section {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.welcome-section h2 {
+    font-size: 24px; /* Increase heading size */
+    margin-bottom: 20px; /* Add spacing below heading */
+}
+
+/* Location and Hours Section Styles */
+.location-section{
+    padding: 20px 0;
+    text-align: center;
+}
+
+.location-section h2 {
+    font-size: 24px; /* Increase heading size */
+    margin-bottom: 20px; /* Add spacing below heading */
+}
+/* Opening Hours Section Styles */
+.hours-section {
     padding: 50px 0;
     text-align: center;
+}
+
+.hours-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333; /* Dark gray for headings */
+}
+
+.hours-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    max-width: 600px; /* Set maximum width for better readability */
+}
+
+.hours-table th,
+.hours-table td {
+    padding: 10px;
+    border: 1px solid #e0e0e0; /* Light gray for borders */
+}
+
+.hours-table th {
+    background-color: #f5f5f5; /* Lighter gray for header background */
+}
+
+.hours-table td {
+    font-size: 16px;
+    color: #666; /* Darker gray for text */
+}
+
+.book-now-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue for button background */
+    color: #fff; /* White for button text */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.book-now-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+ 
+#menu {
+    background-color: #f9f9f9; /* Set background color */
+    padding: 30px 20px; /* Add padding */
+    text-align: center; /* Center align text */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+
+#menu:hover {
+    transform: translateY(-5px); /* Move the section slightly upwards on hover */
+}
+
+.kitchen_welcome {
+    max-width: 100%; /* Set maximum width */
+    margin: 0 auto; /* Center align horizontally */
+    padding: 0 10px; /* Add padding */
+}
+
+.kitchen_welcome h2 {
+    font-size: 26px; /* Adjust font size */
+    color: #333; /* Text color */
+    margin-bottom: 15px; /* Add some space below the heading */
+}
+
+.kitchen_welcome p {
+    font-size: 16px; /* Adjust font size */
+    color: #666; /* Text color */
+    line-height: 1.5; /* Increase line height for better readability */
 }
 .kitchen_suply {
     padding: 5px 0;
@@ -108,7 +202,34 @@ nav {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.right:hover {
+    transform: translateY(-5px); /* Move the section slightly upwards on hover */
+}
+.left:hover {
+    transform: translateY(-5px); /* Move the section slightly upwards on hover */
+}
 
+.left h2 {
+    text-align: center;
+    font-size: 20px; /* Increase font size */
+    color: #333; /* Text color */
+    margin-bottom: 20px; /* Add some space below the heading */
+    text-transform: uppercase; /* Convert text to uppercase */
+    letter-spacing: 1px; /* Add letter spacing */
+    border-bottom: 2px solid #3cb371; /* Add a green underline */
+    padding-bottom: 10px; /* Add padding below the underline */
+}
+
+.right h2 {
+    text-align: center;
+    font-size: 20px; /* Increase font size */
+    color: #333; /* Text color */
+    margin-bottom: 20px; /* Add some space below the heading */
+    text-transform: uppercase; /* Convert text to uppercase */
+    letter-spacing: 1px; /* Add letter spacing */
+    border-bottom: 2px solid #3cb371; /* Add a green underline */
+    padding-bottom: 10px; /* Add padding below the underline */
+}
 @media only screen and (min-width: 600px) {
     .left, .right {
         width: calc(50% - 20px);
@@ -175,8 +296,8 @@ nav {
 
 /* Footer Styles */
 footer {
-    background-color: #2e8b57;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+    background-color: #333; /* Dark gray footer background */
+    color: #fff; /* White text color */
+    padding: 20px 0; /* Add padding to the footer */
+    text-align: center; /* Center align text */
 }
