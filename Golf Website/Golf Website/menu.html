@@ -9,23 +9,22 @@
 </head>
 <body>
  
-<header>
-    <div class="container">
-        <a href="#" class="logo"><img src="Images/Logo.png" alt="Logo"></a>
+    <header>
+        <div class="container">
+            <a href="#" class="logo"><img src="Images/Logo.png" alt="Logo"></a>
            
-        <nav>
-            <ul>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="bookings.html">Book A Time</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="Main.html">Return</a></li>
-            </ul>
-        </nav>
-        
-    </div>
-</header>
-
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="bookings.html">Book A Time</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="Main.html">Return</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
 <section id="menu">
     <div class="kitchen_welcome">
         <h2>Kitchen & Bar Menu</h2>
@@ -79,67 +78,143 @@
             </ul>
         </div>
 
-        <!-- Desserts -->
-        <div class="menu-category">
-            <h3>Desserts</h3>
-            <ul>
-                <li>
-                    <div class="menu-item">
-                        <div class="menu-info">
-                            <strong>Dessert 1</strong>
-                            <p class="price">£5.99</p>
-                        </div>
-                        <p class="description">Description of the dessert</p>
-                    </div>
-                </li>
-                <!-- Add more dessert items here -->
-            </ul>
-        </div>
-    </div>
+<!-- Mains -->
+<div class="menu-category">
+    <h3 onclick="toggleMains()">Mains</h3>
+    <ul id="mains-list" style="display: none;">
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Soup of the Day</strong> <!-- Main course item -->
+                    <p class="price">£4.50</p> <!-- Price -->
+                </div>
+                <p class="description">Served with a roll & Butter</p> <!-- Description -->
+            </div>
+        </li>
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Mozzarella Sticks</strong> <!-- Another main course item -->
+                    <p class="price">£4.50</p> <!-- Price -->
+                </div>
+                <p class="description">Served with a sweet chilli sauce</p> <!-- Description -->
+            </div>
+        </li>
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Pâté</strong> <!-- Main course item -->
+                    <p class="price">£4.75</p> <!-- Price -->
+                </div>
+                <p class="description">Served with Toast & Chutney</p> <!-- Description -->
+            </div>
+        </li>
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Haggis Bon Bons</strong> <!-- Main course item -->
+                    <p class="price">£4.95</p> <!-- Price -->
+                </div>
+                <p class="description">Served with a Peppercorn sauce</p> <!-- Description -->
+            </div>
+        </li>
+        <!-- Add more starter items here -->
+    </ul>
+</div>
+<!-- Deserts -->
+<div class="menu-category">
+    <h3 onclick="toggleDeserts()">Deserts</h3>
+    <ul id="deserts-list" style="display: none;">
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Soup of the Day</strong> <!-- Main course item -->
+                    <p class="price">£4.50</p> <!-- Price -->
+                </div>
+                <p class="description">Served with a roll & Butter</p> <!-- Description -->
+            </div>
+        </li>
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Mozzarella Sticks</strong> <!-- Another main course item -->
+                    <p class="price">£4.50</p> <!-- Price -->
+                </div>
+                <p class="description">Served with a sweet chilli sauce</p> <!-- Description -->
+            </div>
+        </li>
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Pâté</strong> <!-- Main course item -->
+                    <p class="price">£4.75</p> <!-- Price -->
+                </div>
+                <p class="description">Served with Toast & Chutney</p> <!-- Description -->
+            </div>
+        </li>
+        <li>
+            <div class="menu-item">
+                <div class="menu-info">
+                    <strong>Haggis Bon Bons</strong> <!-- Main course item -->
+                    <p class="price">£4.95</p> <!-- Price -->
+                </div>
+                <p class="description">Served with a Peppercorn sauce</p> <!-- Description -->
+            </div>
+        </li>
+        <!-- Add more starter items here -->
+    </ul>
+</div>
+
+    <p class="kitchen_suply">All food is supplied by ... </p>
+
+</div>
+       
 
     <div class="right">
-        <!-- Drinks -->
-        <div class="menu-category">
-            <h3 onclick="toggleDrinks()">Drinks</h3>
-            <ul id="drinks-list" style="display: none;">
-                <li>
-                    <div class="menu-item">
-                        <div class="menu-info">
-                            <strong>Soup of the Day</strong> <!-- Main course item -->
-                            <p class="price">£4.50</p> <!-- Price -->
+        
+            <!-- Drinks -->
+            <div class="menu-category">
+                <h3 onclick="toggleDrinks()">Drinks</h3>
+                <ul id="drinks-list" style="display: none;">
+                    <li>
+                        <div class="menu-item">
+                            <div class="menu-info">
+                                <strong>Soup of the Day</strong> <!-- Main course item -->
+                                <p class="price">£4.50</p> <!-- Price -->
+                            </div>
+                            <p class="description">Served with a roll & Butter</p> <!-- Description -->
                         </div>
-                        <p class="description">Served with a roll & Butter</p> <!-- Description -->
-                    </div>
-                </li>
-                <li>
-                    <div class="menu-item">
-                        <div class="menu-info">
-                            <strong>Mozzarella Sticks</strong> <!-- Another main course item -->
-                            <p class="price">£4.50</p> <!-- Price -->
+                    </li>
+                    <li>
+                        <div class="menu-item">
+                            <div class="menu-info">
+                                <strong>Mozzarella Sticks</strong> <!-- Another main course item -->
+                                <p class="price">£4.50</p> <!-- Price -->
+                            </div>
+                            <p class="description">Served with a sweet chilli sauce</p> <!-- Description -->
                         </div>
-                        <p class="description">Served with a sweet chilli sauce</p> <!-- Description -->
-                    </div>
-                </li>
-                <li>
-                    <div class="menu-item">
-                        <div class="menu-info">
-                            <strong>Pâté</strong> <!-- Main course item -->
-                            <p class="price">£4.75</p> <!-- Price -->
+                    </li>
+                    <li>
+                        <div class="menu-item">
+                            <div class="menu-info">
+                                <strong>Pâté</strong> <!-- Main course item -->
+                                <p class="price">£4.75</p> <!-- Price -->
+                            </div>
+                            <p class="description">Served with Toast & Chutney</p> <!-- Description -->
                         </div>
-                        <p class="description">Served with Toast & Chutney</p> <!-- Description -->
-                    </div>
-                </li>
-                <li>
-                    <div class="menu-item">
-                        <div class="menu-info">
-                            <strong>Haggis Bon Bons</strong> <!-- Main course item -->
-                            <p class="price">£4.95</p> <!-- Price -->
+                    </li>
+                    <li>
+                        <div class="menu-item">
+                            <div class="menu-info">
+                                <strong>Haggis Bon Bons</strong> <!-- Main course item -->
+                                <p class="price">£4.95</p> <!-- Price -->
+                            </div>
+                            <p class="description">Served with a Peppercorn sauce</p> <!-- Description -->
                         </div>
-                        <p class="description">Served with a Peppercorn sauce</p> <!-- Description -->
-                    </div>
-                </li>
-                <!-- Add more drink items here -->
-            </ul>
+                    </li>
+                    <!-- Add more starter items here -->
+                </ul>
+            </div>
         </div>
     </div>
 </div>

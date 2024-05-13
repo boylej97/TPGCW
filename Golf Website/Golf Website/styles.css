@@ -8,9 +8,10 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 1920px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Header Styles */
@@ -19,34 +20,50 @@ header {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 100px 0;
+    padding: 40px 0; /* Adjust header padding */
     position: relative;
+}
+
+
+/* Logo Styles */
+.logo-container {
+    display: flex;
+    justify-content: center; /* Center the logo horizontally */
+    align-items: center; /* Center the logo vertically */
+    margin-bottom: 20px; /* Add space between the logo and the navigation */
+}
+
+
+.logo-container img {
+    max-width: 100%; /* Ensure the logo image doesn't exceed its container */
 }
 
 /* Navigation Styles */
 nav {
-    position: absolute;
-    top: 65%;
-    left: 0;
+    position: relative; /* Change position to relative */
     width: 100%;
+    padding-top: 20px; /* Add padding to the top of the navigation */
 }
 
-nav ul {
+.nav-links {
     list-style-type: none;
-    padding: 0;
+    padding: 0px;
     text-align: center;
+    margin: 0; /* Remove default margin */
 }
 
-nav ul li {
+.nav-links li {
     display: inline-block;
     margin-right: 20px;
+    margin-bottom: 40px;
+    margin-top: 20px;
 }
 
-nav ul li:last-child {
+.nav-links li:last-child {
     margin-right: 0;
 }
 
-nav ul li a {
+.nav-links li a {
     color: #333;
     text-decoration: none;
     padding: 10px 20px;
@@ -55,70 +72,105 @@ nav ul li a {
     transition: background-color 0.3s ease;
 }
 
-nav ul li a:hover {
+.nav-links li a:hover {
     background-color: #2e8b57;
 }
 
 /* Media Query for Mobile Devices */
 @media only screen and (max-width: 600px) {
-    nav ul {
-        display: none; /* Hide regular navigation on mobile */
-    }
-
-    .burger-menu {
-        display: block; /* Show burger menu icon */
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        cursor: pointer;
+    .logo-container {
+        padding-bottom: 20px; /* Increase padding below the logo on mobile */
     }
 }
-
-
 /* Welcome Section Styles */
-.welcome-section {
+.kitchen_welcome {
     padding: 50px 0;
     text-align: center;
 }
-
-/* Location and Hours Section Styles */
-.location-section,
-.hours-section {
-    padding: 50px 0;
+.kitchen_suply {
+    padding: 5px 0;
     text-align: center;
 }
-
-.hours-section ul {
-    list-style: none;
-    padding: 0;
-    text-align: center;
+/* Item Menu Styles */
+.item-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
-.hours-section ul li {
-    margin-bottom: 10px;
-    text-align: center;
-    border-radius: 5px;
+.left, .right {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.hours-section ul li span {
+@media only screen and (min-width: 600px) {
+    .left, .right {
+        width: calc(50% - 20px);
+    }
+}
+
+/* Menu Category Styles */
+.menu-category {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 10px;
     background-color: #f9f9f9;
-    padding: 5px 10px;
-}
-
-/* Book Now Button Styles */
-.book-now-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3cb371;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
-    font-size: 16px;
 }
 
-.book-now-button:hover {
-    background-color: #2e8b57;
+.menu-category:hover {
+    background-color: #e5e5e5;
+}
+
+.menu-category h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.menu-category ul {
+    padding: 0;
+}
+
+.menu-category li {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-category li:last-child {
+    border-bottom: none;
+}
+
+/* Menu Item Styles */
+.menu-item {
+    margin-bottom: 20px;
+}
+
+.menu-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-info strong {
+    flex-grow: 1;
+    font-size: 18px;
+}
+
+.menu-item .price {
+    font-weight: bold;
+}
+
+.description {
+    color: #666;
 }
 
 /* Footer Styles */
@@ -127,65 +179,4 @@ footer {
     color: #fff;
     padding: 20px 0;
     text-align: center;
-}
-
-/* Menu Category Styles */
-.menu-container {
-    display: flex;
-}
-.kitchen_welcome {
-    padding-right: 20%;
-    padding-left: 20%;
-    text-align: center;
-}
-.item-menu {
-    display: flex;
-}
-.left {
-    width: 50%;
-    padding: 50px
-}
-.right {
-    width: 50%;
-    padding: 50px
-}
-/* Menu Category Styles */
-.menu-category {
-    width: 100%;
-    margin: 0 auto;
-    text-align: justify;
-}
-/* Menu Item Styles */
-.menu-item {
-    display: flex;
-    flex-direction: column; /* Arrange items vertically */
-    margin-bottom: 10px; /* Add space between menu items */
-}
-
-.menu-item strong {
-    font-weight: bold; /* Make menu item text bold */
-}
-.menu-info {
-    display: flex;
-    justify-content: space-between; /* Align items with space between them */
-    align-items: center; /* Center items vertically */
-}
-.menu-info strong {
-    flex-grow: 1; /* Allow the item name to grow */
-}
-.menu-item .price {
-    margin-top: 5px; /* Add space between item name and price */
-    font-weight: bold; /* Make price text bold */
-}
-
-.description {
-    margin-top: 0.5px;
-}
-
-/* Divider Styles */
-.menu-container::after {
-    content: "";
-    width: 2px;
-    background-color: #943838;
-    margin: 0 10px;
 }
