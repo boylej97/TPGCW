@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>Menu - {Put Name Here}</title>
+    <title>Course Overview</title>
     <link rel="stylesheet" href="styles.css">
     <script src="Booking.js"></script>
 </head>
@@ -26,13 +26,72 @@
         <li><a href="main.html">Return</a></li>
     </ul>
 </nav>
-<section id="events">
-    <div class="container">
-        <h2>course</h2>
-        <p>Explore our calendar of exciting events and tournaments. From friendly competitions to charity fundraisers, there's always something happening at {Put Name Here}.</p>
+<section id="Course">
+    <div class="Course_Look">
+        <h2>Course Overview</h2>
+        <p>Experience the thrill of our 9-hole golf course, where every swing promises excitement and challenge in equal measure. Nestled amidst picturesque landscapes, our course offers a serene escape for golf enthusiasts of all levels. Whether you're a seasoned player or a newcomer to the game, our meticulously designed layout provides the perfect setting for an enjoyable round. Don't miss the opportunity to explore each hole with our immersive flyovers, offering a bird's-eye view of the course like never before. Come join us and discover the joy of golfing at Torrance Park.</p>
     </div>
 </section>
-
+ <!-- Video container -->
+ <section id="videos">
+    <div class="container">
+        <h2>Course Flyovers</h2>
+        <div class="video-container" id="videoContainer">
+            <video id="video1" controls style="display: none;">
+                <source src="video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video2" controls style="display: none;">
+                <source src="video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video3" controls style="display: none;">
+                <source src="video3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video4" controls style="display: none;">
+                <source src="video4.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video5" controls style="display: none;">
+                <source src="video5.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video6" controls style="display: none;">
+                <source src="video6.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video7" controls style="display: none;">
+                <source src="video7.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video8" controls style="display: none;">
+                <source src="video8.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video9" controls style="display: none;">
+                <source src="video9.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <video id="video10" controls autoplay>
+                <source src="video10.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video><!-- Add more videos here -->
+        </div>
+        <div class="btn-container">
+            <button onclick="toggleVideo('video1')">Hole 1</button>
+            <button onclick="toggleVideo('video2')">Hole 2</button>
+            <button onclick="toggleVideo('video3')">Hole 3</button>
+            <button onclick="toggleVideo('video4')">Hole 4</button>
+            <button onclick="toggleVideo('video5')">Hole 5</button><!-- Add more buttons for other videos -->
+            <button onclick="toggleVideo('video6')">Hole 6</button>
+            <button onclick="toggleVideo('video7')">Hole 7</button>
+            <button onclick="toggleVideo('video8')">Hole 8</button>
+            <button onclick="toggleVideo('video9')">Hole 9</button>
+        </div>
+    </div>
+</section>
+</div>
 <footer>
     <div class="container">
         <p>&copy; 2024. All rights reserved.</p>

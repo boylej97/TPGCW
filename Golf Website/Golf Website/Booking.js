@@ -87,8 +87,40 @@ function toggleDrinks() {
     var drinksList = document.getElementById('drinks-list');
     drinksList.style.display = (drinksList.style.display === 'none') ? 'block' : 'none';
 }
-function toggleEvent1() {
-var pevent1list = document.getElementById('Pevent1');
-pevent1list.style.display = (pevent1list.style.display === 'none') ? 'block' : 'none';
+function togglePRevents() {
+var PReventslist = document.getElementById('PRevents-list');
+PReventslist.style.display = (PReventslist.style.display === 'none') ? 'block' : 'none';
 }
-
+function toggleUPevents() {
+    var UPeventslist = document.getElementById('UPevents-list');
+    UPeventslist.style.display = (UPeventslist.style.display === 'none') ? 'block' : 'none';
+    }
+    function toggleVideo(videoId) {
+        var videoContainer = document.getElementById("videoContainer");
+        var videos = videoContainer.getElementsByTagName("video");
+    
+        // Hide all videos
+        for (var i = 0; i < videos.length; i++) {
+            videos[i].pause(); // Pause all videos
+            videos[i].style.display = "none"; // Hide all videos
+        }
+    
+        // Show the clicked video
+        var video = document.getElementById(videoId);
+        if (video) {
+            video.style.display = "block"; // Show the clicked video
+            video.play(); // Play the clicked video
+        }
+    
+        // Show video10 if the same button is pressed as the video playing
+        var video10 = document.getElementById('video10');
+        if (video10) {
+            if (videoId === 'video10') {
+                video10.style.display = 'block'; // Show video10 if the same button is pressed
+                video10.play(); // Play video10
+            } else {
+                video10.style.display = 'none'; // Hide video10 if a different button is pressed
+            }
+        }
+    }
+    

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>Menu - {Put Name Here}</title>
+    <title>Events </title>
     <link rel="stylesheet" href="styles.css">
     <script src="Booking.js"></script>
 </head>
@@ -26,32 +26,48 @@
         <li><a href="main.html">Return</a></li>
     </ul>
 </nav>
-<section id="events">
-    <div class="container">
-        <h2>Upcoming Events</h2>
-        <p>Explore our calendar of exciting events and tournaments. From friendly competitions to charity fundraisers, there's always something happening at {Put Name Here}.</p>
+<section id="menu">
+    <div class="kitchen_welcome">
+        <h2>Our Events</h2>
+        <p>Explore the excitement of our upcoming events and relive the magic of our past gatherings! Join us for an array of engaging activities, from lively performances to enriching workshops. Delve into our calendar of events and discover what's in store for you. Plus, don't miss the chance to reminisce about our memorable past events by browsing through our archives. There's something for everyone at Torrance Park, come and be a part of the experience!
+        </p>
     </div>
 </section>
-<div class="event-cont">
-<div class="left">
-<h2>Previous Events</h2>
-<div class="events-catagory">
-<h3 onclick="toggleEvents()">Event 1</h3>
-<ul id="Pevent1" style="display: none">
-<li>
-<div class="pevent-type">
-<div class="pevent-info">
-<strong> Event 1 </strong>
-<p>event info goes here image slideshow below </p>
-</div>
-</li>
-</ul>
-</div>
-<div class="right">
-<h2>Upcoming Events</h2>
-</div>
-</div>
+<div class="item-menu">
+    <div class="left">
 
+        <h2>Previous Events</h2>
+        <div class="Event-category">
+            <h3 onclick="togglePRevents()">Event 1</h3>
+            <ul id="PRevents-list" style="display: none;">
+                <li>
+                    <div class="PRevents-event">
+                        <div class="PRevents-info">
+                             
+                            <p class="PR-date">Event Name</p> 
+                        </div>
+                        <p class="event-description">01/01/2024</p> 
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+<div class="right">
+    <h2>Upcoming Events</h2>
+    <div class="Event-category">
+        <h3 onclick="toggleUPevents()">Event 1</h3>
+        <ul id="UPevents-list" style="display: none;">
+            <li>
+                <div class="UPevents-event">
+                    <div class="UPevents-info">
+                        <p class="UP-date">Event Name</p>
+                    </div>
+                    <p class="event-description">01/01/2024</p>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
 
 
 <footer>
