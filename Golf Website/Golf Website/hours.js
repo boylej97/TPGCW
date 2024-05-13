@@ -5,13 +5,13 @@ function isClubOpen() {
 
     // Define the opening hours for each day
     const openingHours = {
-        0: { open: false }, // Sunday
-        1: { open: true,  start: 8,  end: 18 }, // Monday
-        2: { open: true,  start: 8,  end: 18 }, // Tuesday
-        3: { open: true,  start: 8,  end: 18 }, // Wednesday
-        4: { open: true,  start: 8,  end: 18 }, // Thursday
-        5: { open: true,  start: 8,  end: 18 }, // Friday
-        6: { open: true,  start: 8,  end: 18 }  // Saturday
+        0: { open: true,  start: 8,  end: 20 }, // Sunday
+        1: { open: true,  start: 8,  end: 20 }, // Monday
+        2: { open: true,  start: 8,  end: 20 }, // Tuesday
+        3: { open: true,  start: 8,  end: 20 }, // Wednesday
+        4: { open: true,  start: 8,  end: 20 }, // Thursday
+        5: { open: true,  start: 8,  end: 23 }, // Friday
+        6: { open: true,  start: 8,  end: 23 }  // Saturday
     };
 
     // Get the opening hours for the current day

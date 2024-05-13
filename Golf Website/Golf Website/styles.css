@@ -192,7 +192,13 @@ nav {
     justify-content: space-between;
     padding: 0 20px;
 }
+.event-cont {
+display: flex;
+flex-wrap: wrap;
+justify-content:space-between;
+padding: 0 20px;
 
+}
 .left, .right {
     width: 100%;
     margin-bottom: 30px;

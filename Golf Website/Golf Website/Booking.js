@@ -87,4 +87,8 @@ function toggleDrinks() {
     var drinksList = document.getElementById('drinks-list');
     drinksList.style.display = (drinksList.style.display === 'none') ? 'block' : 'none';
 }
+function toggleEvent1() {
+var pevent1list = document.getElementById('Pevent1');
+pevent1list.style.display = (pevent1list.style.display === 'none') ? 'block' : 'none';
+}
 
