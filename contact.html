@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="java/contact.js"></script>
+</head>
+<body>
+ 
+<header>
+    <div class="container">
+        <a href="#" class="logo"><img src="Images/Logo.png" alt="Logo"></a>
+    </div>
+</header>
+
+<nav id="nav-container" class="nav-links">
+    <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="Course.html">Course</a></li>
+        <li><a href="https://visitors.brsgolf.com/torrancepark9#/course/1" target="_blank" rel="noopener">Book A Time</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="main.html">Return</a></li>
+    </ul>
+</nav>
+<div class="Contact">
+    <h1>Contact Us</h1>
+    <form id="contact-form" action="PhP/email.php" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2024 Golf Club. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
