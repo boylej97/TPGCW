@@ -3,23 +3,55 @@ body {
     font-family: "Arial", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #FFFDD0; /* Cream background */
-    color: #808080; /* Gray text color */
+    background-color: #808080; /* Mid-tone gray background */
+    color: #333; /* Dark gray text color */
+    font-size: 16px; /* Base font size */
+    line-height: 1.6; /* Line height for better readability */
 }
 
-.container {
-    width: 80%; /* Adjust container width for better readability */
-    margin: 0 auto; /* Center the container horizontally */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Arial", sans-serif; /* Use Arial font for headings */
+    font-weight: bold; /* Bold font weight for headings */
+    color: #333; /* Dark gray text color for headings */
+    margin-top: 20px; /* Add spacing above headings */
+    margin-bottom: 10px; /* Add spacing below headings */
+}
+
+h1 {
+    font-size: 36px; /* Larger font size for h1 */
+}
+
+h2 {
+    font-size: 30px; /* Large font size for h2 */
+}
+
+h3 {
+    font-size: 24px; /* Medium font size for h3 */
+}
+
+p {
+    margin-bottom: 20px; /* Add spacing below paragraphs */
+}
+
+a {
+    color: #007bff; /* Blue color for links */
+    text-decoration: none; /* Remove default underline from links */
+    transition: color 0.3s ease; /* Smooth transition for link color */
+}
+
+a:hover {
+    color: #0056b3; /* Darker blue color on hover */
 }
 
 /* Header Styles */
 header {
-    background-image: url('images/course.png'); /* Set the background image */
+    background-image: url('/images/course.png'); /* Set the background image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     padding: 100px 0;
     position: relative;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .logo {
@@ -36,6 +68,8 @@ header {
 nav {
     text-align: center; /* Center align navigation links */
     margin-top: 20px; /* Add margin to separate header and navigation */
+    background-color: #808080; /* Lighter shade of gray */
+    line-height: 40px; /* Set line height to match the height of the navigation bar */
 }
 
 .nav-links {
@@ -54,16 +88,17 @@ nav {
 }
 
 .nav-links li a {
-    color: #808080; /* Gray link color */
+    color: #fff; /* White text color */
+    background-color: #007bff; /* Navy blue background color */
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .nav-links li a:hover {
-    background-color: #A9A9A9; /* Dark gray background on hover */
-    color: #808080; /* Gray text color on hover */
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 @media only screen and (max-width: 600px) {
@@ -85,74 +120,210 @@ nav {
 .welcome-section {
     padding: 20px 0;
     text-align: center;
+    background: linear-gradient(to bottom, #808080, #A9A9A9); /* Gradient background */
+    color: #000000; /* Text color */
 }
 
 .welcome-section h2 {
-    font-size: 24px; /* Increase heading size */
+    font-size: 32px; /* Increase heading size */
     margin-bottom: 20px; /* Add spacing below heading */
 }
 
-/* Location and Hours Section Styles */
-.location-section{
+.welcome-section p {
+    font-size: 18px; /* Increase paragraph font size */
+    line-height: 1.6; /* Increase line height for better readability */
+}
+
+.welcome-content {
+    text-align: center; /* Center align text */
+    max-width: 800px; /* Limit content width for better readability */
+    margin: 0 auto; /* Center content horizontally */
+    color: #000; /* Black text color */
+}
+
+.welcome-content h2 {
+    font-size: 32px; /* Increase heading size */
+    margin-bottom: 20px; /* Add spacing below heading */
+}
+
+.welcome-content p {
+    font-size: 18px; /* Increase paragraph font size */
+    line-height: 1.6; /* Increase line height for better readability */
+    margin-bottom: 30px; /* Add spacing below paragraphs */
+}
+/* Location Section Styles */
+.location-section {
     padding: 20px 0;
     text-align: center;
+    background: linear-gradient(to bottom, #A9A9A9, #C0C0C0); /* Gradient background */
 }
 
-.location-section h2 {
-    font-size: 24px; /* Increase heading size */
-    margin-bottom: 20px; /* Add spacing below heading */
+#map {
+    width: 33%; /* Set map width */
+    height: 600px; /* Set map height */
+    border: 3px solid #333; /* Add border */
+    border-radius: 8px; /* Add border radius */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
 }
-/* Opening Hours Section Styles */
+/* Media query for smaller screens */
+@media only screen and (max-width: 600px) {
+    #map {
+        width: 400px; /* Set map width */
+        height: 320px; /* Reduce map height for smaller screens */
+       
+    }
+}
+.location-info {
+    text-align: center; /* Center align text */
+    margin-top: 20px; /* Add top margin */
+}
+
+.address, .contact-info {
+    margin-bottom: 20px; /* Add spacing between address and contact information */
+}
+.address a {
+    color: black; /* Set link color to black */
+}
+.address p, .contact-info p {
+    font-size: 18px; /* Set font size */
+    line-height: 1.6; /* Set line height for better readability */
+    color: #333; /* Set text color */
+}
+
+
+/* Media query for smaller screens */
+@media only screen and (max-width: 600px) {
+    /* Style for mobile devices */
+    .contact-info {
+        text-align: center; /* Center align text on mobile */
+        color: #000; /* Set text color to black */
+    }
+
+    .phone {
+        display: block; /* Show phone number as block */
+        margin-bottom: 10px; /* Add margin below phone number */
+        color: #000; /* Set text color to black */
+        text-decoration: none; /* Remove underline */
+    }
+
+    .email {
+        display: block; /* Show email as block */
+        color: #000; /* Set text color to black */
+    }
+}
+
+
+/* Style for larger screens (PC) */
+.contact-info {
+    text-align: center; /* Center align text */
+    color: #000; /* Set text color to black */
+}
+
+.phone, .email {
+    display: inline; /* Show phone number and email as inline */
+    margin-right: 20px; /* Add margin to separate phone number and email */
+    color: #000; /* Set text color to black */
+}
+
+
+
+/* Hours Section Styles */
+
 .hours-section {
-    padding: 50px 0;
+    padding: 10px 20px; /* Add padding to the sides */
     text-align: center;
-}
-
-.hours-section h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #808080; /* Gray for headings */
+    background: linear-gradient(to bottom, #C0C0C0, #D3D3D3); /* Gradient background */
 }
 
 .hours-table {
-    margin: 0 auto;
-    border-collapse: collapse;
-    max-width: 600px; /* Set maximum width for better readability */
+    margin: 0 auto; /* Center the table horizontally */
+    max-width: 800px; /* Limit the width of the table */
+    width: 100%; /* Make the table responsive */
+    border: 3px solid #333; /* gray border */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.75); /* Darker shadow */
+    border-radius: 8px; /* Add border radius */
 }
 
 .hours-table th,
 .hours-table td {
-    padding: 10px;
-    border: 1px solid #A9A9A9; /* Dark gray for borders */
+    padding: 10px; /* Add padding for readability */
+    border: 1px solid #555; /* Border color */
+    background-color: #f9f9f9; /* Cream background */
 }
 
 .hours-table th {
-    background-color: #FFFDD0; /* Cream background for header */
+    background-color: #333; /* Darker background color for header */
+    color: #fff; /* White text color */
+    font-weight: bold; /* Make the header text bold */
+}
+.hours-table td {
+    background-color: #666; /* Darker background color for table cells */
+    color: #fff; /* White text color */
 }
 
+.hours-table tr:nth-child(even) td {
+    background-color: #555; /* Darker alternate row background color */
+}
+
+.hours-section h2 {
+    font-size: 28px; /* Increase heading size */
+    margin-bottom: 20px; /* Add spacing below heading */
+}
+
+.hours-table {
+    margin: 0 auto; /* Center the table */
+    width: 100%; /* Make the table full width */
+    border-collapse: collapse; /* Collapse table borders */
+}
+
+.hours-table th, .hours-table td {
+    padding: 10px; /* Add padding */
+    border: 1px solid #ddd; /* Add border */
+    text-align: center; /* Center align text */
+}
+
+.hours-table th {
+    background-color: #333; /* Light gray background for header */
+    color: #999; /* Darker gray text color for the first column */
+}
 .hours-table td {
     font-size: 16px;
-    color: #808080; /* Gray text color */
+    color: #000; /* Dark gray for text */
 }
+
+#book-now-section {
+    background-color: #D3D3D3; /* Background color */
+    text-align: center; /* Center-align content */
+    padding: 20px 0; /* Adjust padding as needed */
+}
+
+.container {
+    width: 80%; /* Adjust container width for better readability */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
 
 .book-now-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #000080; /* Navy blue for button background */
-    color: #FFFDD0; /* Cream text color */
+    background-color: #007bff; /* Navy blue for button background */
+    color: #fff; /* White for button text */
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
     font-size: 16px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .book-now-button:hover {
-    background-color: #000066; /* Darker blue on hover */
+    background-color: #0056b3; /* Darker blue on hover */
+    color: #fff; /* White for button text */
 }
 
-/* Menu Section Styles */
 #menu {
-    background-color: #FFFDD0; /* Cream background */
+    background-color: #f9f9f9; /* Cream background */
     padding: 30px 20px; /* Add padding */
     text-align: center; /* Center align text */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
@@ -172,13 +343,13 @@ nav {
 
 .kitchen_welcome h2 {
     font-size: 26px; /* Adjust font size */
-    color: #808080; /* Gray text color */
+    color: #333; /* Text color */
     margin-bottom: 15px; /* Add some space below the heading */
 }
 
 .kitchen_welcome p {
     font-size: 16px; /* Adjust font size */
-    color: #808080; /* Gray text color */
+    color: #666; /* Text color */
     line-height: 1.5; /* Increase line height for better readability */
 }
 
@@ -195,7 +366,7 @@ nav {
     margin-bottom: 30px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #FFFDD0; /* Cream background */
+    background-color: #fff; /* Cream background */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -207,11 +378,11 @@ nav {
 .left h2, .right h2 {
     text-align: center;
     font-size: 20px; /* Increase font size */
-    color: #000080; /* Navy blue text color */
+    color: #333; /* Text color */
     margin-bottom: 20px; /* Add some space below the heading */
     text-transform: uppercase; /* Convert text to uppercase */
     letter-spacing: 1px; /* Add letter spacing */
-    border-bottom: 2px solid #000080; /* Navy blue underline */
+    border-bottom: 2px solid #007bff; /* Navy blue underline */
     padding-bottom: 10px; /* Add padding below the underline */
 }
 
@@ -226,6 +397,7 @@ nav {
     margin-bottom: 30px;
     padding: 15px;
     border-radius: 10px;
+    background-color: #f9f9f9; /* Cream background */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
 }
@@ -243,9 +415,6 @@ nav {
 .Event-category h3 {
     margin-top: 0; /* Remove top margin from h3 */
     cursor: pointer; /* Cursor style */
-    text-align: center; /* Center align text */
-    margin-bottom: 10px; /* Add bottom margin */
-    color: #333; /* Dark gray text color */
 }
 
 .Event-category ul {
@@ -255,13 +424,11 @@ nav {
 }
 
 .Event-category ul li {
-    margin-bottom: 10px; /* Add bottom margin */
-    text-align: left; /* Align text to the left */
-    color: #333; /* Dark gray text color */
+    margin-bottom: 10px; /* Add bottom margin for spacing */
 }
 
 .Event-category ul li:last-child {
-    margin-bottom: 0; /* Remove bottom margin for last item */
+    margin-bottom: 0; /* Remove bottom margin for last list item */
 }
 
 .menu-category h3 {
@@ -311,7 +478,7 @@ nav {
 
 .description, .event-description {
     text-align: left; /* Align text to the left */
-    margin-bottom: 0px; /* Add bottom margin */
+    margin-bottom: 0px; /* Add margin below each description */
     color: #333; /* Dark gray text color */
 }
 
@@ -328,13 +495,13 @@ nav {
 
 #Course h2 {
     font-size: 28px;
-    color: #000080; /* Navy blue text color */
+    color: #333; /* Dark gray text color */
     margin-bottom: 20px;
 }
 
 #Course p {
     font-size: 16px;
-    color: #808080; /* Gray text color */
+    color: #666; /* Darker gray text color */
     line-height: 1.6;
 }
 
@@ -349,7 +516,7 @@ nav {
 }
 
 .container h2 {
-    color: #000080; /* Navy blue text color */
+    color: #333; /* Dark gray text color */
     font-size: 28px; /* Larger font size */
     margin-bottom: 30px; /* Add spacing below heading */
 }
@@ -377,21 +544,21 @@ nav {
     margin: 5px; /* Add margin around each button */
     padding: 10px 20px; /* Add padding to make buttons larger and more clickable */
     font-size: 16px; /* Increase font size for better readability */
-    background-color: #000080; /* Navy blue background */
-    color: #FFFDD0; /* Cream text color */
+    background-color: #007bff; /* Navy blue background */
+    color: #fff; /* White text color */
     border: none; /* Remove border */
     border-radius: 5px; /* Add border radius */
     transition: background-color 0.3s ease; /* Add transition for hover effect */
 }
 
 .btn-container button:hover {
-    background-color: #000066; /* Darker blue on hover */
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Footer Styles */
 footer {
     background-color: #333; /* Dark gray footer background */
-    color: #FFFDD0; /* Cream text color */
+    color: #fff; /* White text color */
     padding: 20px 0; /* Add padding to the footer */
     text-align: center; /* Center align text */
 }
