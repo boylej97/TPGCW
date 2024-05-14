@@ -14,7 +14,7 @@ body {
 
 /* Header Styles */
 header {
-    background-image: url('Images/course.png'); /* Set the background image */
+    background-image: url('images/course.png'); /* Set the background image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
