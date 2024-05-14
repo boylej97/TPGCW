@@ -3,8 +3,8 @@ body {
     font-family: "Arial", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5; /* Light gray background */
-    color: #333; /* Dark gray text color */
+    background-color: #FFFDD0; /* Cream background */
+    color: #808080; /* Gray text color */
 }
 
 .container {
@@ -54,7 +54,7 @@ nav {
 }
 
 .nav-links li a {
-    color: #333; /* Dark gray link color */
+    color: #808080; /* Gray link color */
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -62,8 +62,8 @@ nav {
 }
 
 .nav-links li a:hover {
-    background-color: #ddd; /* Light gray background on hover */
-    color: #333; /* Darken text color on hover */
+    background-color: #A9A9A9; /* Dark gray background on hover */
+    color: #808080; /* Gray text color on hover */
 }
 
 @media only screen and (max-width: 600px) {
@@ -111,7 +111,7 @@ nav {
 .hours-section h2 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333; /* Dark gray for headings */
+    color: #808080; /* Gray for headings */
 }
 
 .hours-table {
@@ -123,23 +123,23 @@ nav {
 .hours-table th,
 .hours-table td {
     padding: 10px;
-    border: 1px solid #e0e0e0; /* Light gray for borders */
+    border: 1px solid #A9A9A9; /* Dark gray for borders */
 }
 
 .hours-table th {
-    background-color: #f5f5f5; /* Lighter gray for header background */
+    background-color: #FFFDD0; /* Cream background for header */
 }
 
 .hours-table td {
     font-size: 16px;
-    color: #666; /* Darker gray for text */
+    color: #808080; /* Gray text color */
 }
 
 .book-now-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff; /* Navy blue for button background */
-    color: #fff; /* White for button text */
+    background-color: #000080; /* Navy blue for button background */
+    color: #FFFDD0; /* Cream text color */
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -147,11 +147,12 @@ nav {
 }
 
 .book-now-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #000066; /* Darker blue on hover */
 }
- 
+
+/* Menu Section Styles */
 #menu {
-    background-color: #f9f9f9; /* Cream background */
+    background-color: #FFFDD0; /* Cream background */
     padding: 30px 20px; /* Add padding */
     text-align: center; /* Center align text */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
@@ -171,13 +172,13 @@ nav {
 
 .kitchen_welcome h2 {
     font-size: 26px; /* Adjust font size */
-    color: #333; /* Text color */
+    color: #808080; /* Gray text color */
     margin-bottom: 15px; /* Add some space below the heading */
 }
 
 .kitchen_welcome p {
     font-size: 16px; /* Adjust font size */
-    color: #666; /* Text color */
+    color: #808080; /* Gray text color */
     line-height: 1.5; /* Increase line height for better readability */
 }
 
@@ -194,7 +195,7 @@ nav {
     margin-bottom: 30px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #fff; /* Cream background */
+    background-color: #FFFDD0; /* Cream background */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -206,11 +207,11 @@ nav {
 .left h2, .right h2 {
     text-align: center;
     font-size: 20px; /* Increase font size */
-    color: #333; /* Text color */
+    color: #000080; /* Navy blue text color */
     margin-bottom: 20px; /* Add some space below the heading */
     text-transform: uppercase; /* Convert text to uppercase */
     letter-spacing: 1px; /* Add letter spacing */
-    border-bottom: 2px solid #007bff; /* Navy blue underline */
+    border-bottom: 2px solid #000080; /* Navy blue underline */
     padding-bottom: 10px; /* Add padding below the underline */
 }
 
@@ -225,7 +226,6 @@ nav {
     margin-bottom: 30px;
     padding: 15px;
     border-radius: 10px;
-    background-color: #f9f9f9; /* Cream background */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
 }
@@ -243,6 +243,9 @@ nav {
 .Event-category h3 {
     margin-top: 0; /* Remove top margin from h3 */
     cursor: pointer; /* Cursor style */
+    text-align: center; /* Center align text */
+    margin-bottom: 10px; /* Add bottom margin */
+    color: #333; /* Dark gray text color */
 }
 
 .Event-category ul {
@@ -252,11 +255,13 @@ nav {
 }
 
 .Event-category ul li {
-    margin-bottom: 10px; /* Add bottom margin for spacing */
+    margin-bottom: 10px; /* Add bottom margin */
+    text-align: left; /* Align text to the left */
+    color: #333; /* Dark gray text color */
 }
 
 .Event-category ul li:last-child {
-    margin-bottom: 0; /* Remove bottom margin for last list item */
+    margin-bottom: 0; /* Remove bottom margin for last item */
 }
 
 .menu-category h3 {
@@ -306,7 +311,7 @@ nav {
 
 .description, .event-description {
     text-align: left; /* Align text to the left */
-    margin-bottom: 0px; /* Add margin below each description */
+    margin-bottom: 0px; /* Add bottom margin */
     color: #333; /* Dark gray text color */
 }
 
@@ -323,13 +328,13 @@ nav {
 
 #Course h2 {
     font-size: 28px;
-    color: #333; /* Dark gray text color */
+    color: #000080; /* Navy blue text color */
     margin-bottom: 20px;
 }
 
 #Course p {
     font-size: 16px;
-    color: #666; /* Darker gray text color */
+    color: #808080; /* Gray text color */
     line-height: 1.6;
 }
 
@@ -344,7 +349,7 @@ nav {
 }
 
 .container h2 {
-    color: #333; /* Dark gray text color */
+    color: #000080; /* Navy blue text color */
     font-size: 28px; /* Larger font size */
     margin-bottom: 30px; /* Add spacing below heading */
 }
@@ -372,21 +377,21 @@ nav {
     margin: 5px; /* Add margin around each button */
     padding: 10px 20px; /* Add padding to make buttons larger and more clickable */
     font-size: 16px; /* Increase font size for better readability */
-    background-color: #007bff; /* Navy blue background */
-    color: #fff; /* White text color */
+    background-color: #000080; /* Navy blue background */
+    color: #FFFDD0; /* Cream text color */
     border: none; /* Remove border */
     border-radius: 5px; /* Add border radius */
     transition: background-color 0.3s ease; /* Add transition for hover effect */
 }
 
 .btn-container button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #000066; /* Darker blue on hover */
 }
 
 /* Footer Styles */
 footer {
     background-color: #333; /* Dark gray footer background */
-    color: #fff; /* White text color */
+    color: #FFFDD0; /* Cream text color */
     padding: 20px 0; /* Add padding to the footer */
     text-align: center; /* Center align text */
 }
