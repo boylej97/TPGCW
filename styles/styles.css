@@ -555,6 +555,62 @@ nav {
     background-color: #0056b3; /* Darker blue on hover */
 }
 
+/* Contact Form Styles */
+.Contact {
+    max-width: 800px; /* Adjust maximum width as needed */
+    margin: 50px auto; /* Center the container vertically and horizontally */
+    padding: 20px; /* Add padding */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+}
+
+h1 {
+    text-align: center; /* Center align the heading */
+    margin-bottom: 20px; /* Add margin below the heading */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Add margin between form groups */
+}
+
+label {
+    font-weight: bold; /* Make labels bold */
+    margin-bottom: 5px; /* Add margin below labels */
+}
+
+input,
+textarea {
+    width: 95%; /* Make inputs and textareas fill the container */
+    padding: 10px; /* Add padding */
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 5px; /* Add border radius */
+    margin-bottom: 10px; /* Add margin below inputs */
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing of textarea */
+}
+
+button[type="submit"] {
+    background-color: #007bff; /* Navy blue background */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border radius */
+    padding: 10px 20px; /* Add padding */
+    cursor: pointer; /* Add pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
 /* Footer Styles */
 footer {
     background-color: #333; /* Dark gray footer background */
