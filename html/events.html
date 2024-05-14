@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>Events </title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="java/Booking.js"></script>
+</head>
+<body>
+ 
+<header>
+    <div class="container">
+        <a href="#" class="logo"><img src="Images/Logo.png" alt="Logo"></a>
+    </div>
+</header>
+
+<nav id="nav-container" class="nav-links">
+    <ul>
+        <li><a href="html/about.html">About Us</a></li>
+        <li><a href="html/events.html">Events</a></li>
+        <li><a href="html/Course.html">Course</a></li>
+        <li><a href="html/https://visitors.brsgolf.com/torrancepark9#/course/1" target="_blank" rel="noopener">Book A Time</a></li>
+        <li><a href="html/menu.html">Menu</a></li>
+        <li><a href="html/main.html">Return</a></li>
+    </ul>
+</nav>
+<section id="menu">
+    <div class="kitchen_welcome">
+        <h2>Our Events</h2>
+        <p>Explore the excitement of our upcoming events and relive the magic of our past gatherings! Join us for an array of engaging activities, from lively performances to enriching workshops. Delve into our calendar of events and discover what's in store for you. Plus, don't miss the chance to reminisce about our memorable past events by browsing through our archives. There's something for everyone at Torrance Park, come and be a part of the experience!
+        </p>
+    </div>
+</section>
+<div class="item-menu">
+    <div class="left">
+
+        <h2>Previous Events</h2>
+        <div class="Event-category">
+            <h3 onclick="togglePRevents()">Event 1</h3>
+            <ul id="PRevents-list" style="display: none;">
+                <li>
+                    <div class="PRevents-event">
+                        <div class="PRevents-info">
+                             
+                            <p class="PR-date">Event Name</p> 
+                        </div>
+                        <p class="event-description">01/01/2024</p> 
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+<div class="right">
+    <h2>Upcoming Events</h2>
+    <div class="Event-category">
+        <h3 onclick="toggleUPevents()">Event 1</h3>
+        <ul id="UPevents-list" style="display: none;">
+            <li>
+                <div class="UPevents-event">
+                    <div class="UPevents-info">
+                        <p class="UP-date">Event Name</p>
+                    </div>
+                    <p class="event-description">01/01/2024</p>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

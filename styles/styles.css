@@ -1,0 +1,392 @@
+/* Global Styles */
+body {
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* Light gray background */
+    color: #333; /* Dark gray text color */
+}
+
+.container {
+    width: 80%; /* Adjust container width for better readability */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+/* Header Styles */
+header {
+    background-image: url('Images/course.png'); /* Set the background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+    position: relative;
+}
+
+.logo {
+    display: block; /* Make logo a block element */
+    text-align: center; /* Center the logo */
+}
+
+.logo img {
+    max-width: 200px; /* Adjust max width of the logo */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Navigation Styles */
+nav {
+    text-align: center; /* Center align navigation links */
+    margin-top: 20px; /* Add margin to separate header and navigation */
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.nav-links li:last-child {
+    margin-right: 0;
+}
+
+.nav-links li a {
+    color: #333; /* Dark gray link color */
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    background-color: #ddd; /* Light gray background on hover */
+    color: #333; /* Darken text color on hover */
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-links {
+        padding: 0; /* Remove padding */
+    }
+
+    .nav-links li {
+        margin-right: 10px; /* Reduce margin between links */
+    }
+
+    .nav-links li a {
+        padding: 8px 12px; /* Adjust padding */
+        font-size: 14px; /* Reduce font size */
+    }
+}
+
+/* Welcome Section Styles */
+.welcome-section {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.welcome-section h2 {
+    font-size: 24px; /* Increase heading size */
+    margin-bottom: 20px; /* Add spacing below heading */
+}
+
+/* Location and Hours Section Styles */
+.location-section{
+    padding: 20px 0;
+    text-align: center;
+}
+
+.location-section h2 {
+    font-size: 24px; /* Increase heading size */
+    margin-bottom: 20px; /* Add spacing below heading */
+}
+/* Opening Hours Section Styles */
+.hours-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.hours-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333; /* Dark gray for headings */
+}
+
+.hours-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    max-width: 600px; /* Set maximum width for better readability */
+}
+
+.hours-table th,
+.hours-table td {
+    padding: 10px;
+    border: 1px solid #e0e0e0; /* Light gray for borders */
+}
+
+.hours-table th {
+    background-color: #f5f5f5; /* Lighter gray for header background */
+}
+
+.hours-table td {
+    font-size: 16px;
+    color: #666; /* Darker gray for text */
+}
+
+.book-now-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Navy blue for button background */
+    color: #fff; /* White for button text */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.book-now-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+ 
+#menu {
+    background-color: #f9f9f9; /* Cream background */
+    padding: 30px 20px; /* Add padding */
+    text-align: center; /* Center align text */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+
+#menu:hover {
+    transform: translateY(-5px); /* Move the section slightly upwards on hover */
+}
+
+.kitchen_welcome {
+    max-width: 100%; /* Set maximum width */
+    margin: 0 auto; /* Center align horizontally */
+    padding: 0 10px; /* Add padding */
+}
+
+.kitchen_welcome h2 {
+    font-size: 26px; /* Adjust font size */
+    color: #333; /* Text color */
+    margin-bottom: 15px; /* Add some space below the heading */
+}
+
+.kitchen_welcome p {
+    font-size: 16px; /* Adjust font size */
+    color: #666; /* Text color */
+    line-height: 1.5; /* Increase line height for better readability */
+}
+
+/* Item Menu Styles */
+.item-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.left, .right {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff; /* Cream background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.left:hover, .right:hover {
+    transform: translateY(-5px); /* Move the section slightly upwards on hover */
+}
+
+.left h2, .right h2 {
+    text-align: center;
+    font-size: 20px; /* Increase font size */
+    color: #333; /* Text color */
+    margin-bottom: 20px; /* Add some space below the heading */
+    text-transform: uppercase; /* Convert text to uppercase */
+    letter-spacing: 1px; /* Add letter spacing */
+    border-bottom: 2px solid #007bff; /* Navy blue underline */
+    padding-bottom: 10px; /* Add padding below the underline */
+}
+
+@media only screen and (min-width: 600px) {
+    .left, .right {
+        width: calc(50% - 20px);
+    }
+}
+
+/* Menu Category Styles */
+.menu-category, .Event-category {
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f9f9f9; /* Cream background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.menu-category {
+    background-color: #e5e5e5; /* Light gray background */
+}
+.Event-category {
+    background-color: #f9f9f9; /* Cream background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px; /* Padding */
+    margin-bottom: 20px; /* Margin bottom for spacing */
+}
+
+.Event-category h3 {
+    margin-top: 0; /* Remove top margin from h3 */
+    cursor: pointer; /* Cursor style */
+}
+
+.Event-category ul {
+    list-style: none; /* Remove list bullets */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.Event-category ul li {
+    margin-bottom: 10px; /* Add bottom margin for spacing */
+}
+
+.Event-category ul li:last-child {
+    margin-bottom: 0; /* Remove bottom margin for last list item */
+}
+
+.menu-category h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333; /* Dark gray text color */
+}
+
+.menu-category ul {
+    padding: 0;
+}
+
+.menu-category y li {
+    margin-bottom: 10px;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-category li:last-child {
+    border-bottom: none;
+}
+.kitchen_suply {
+    padding: 5px 0; /* Add padding */
+    text-align: center; /* Center align text */
+    color: #333; /* Dark gray text color */
+    font-size: 16px; /* Font size */
+}
+/* Menu Item Styles */
+.menu-item {
+    margin-bottom: 0px;
+}
+
+.menu-info, .PRevents-info, .UPevents-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-info strong {
+    flex-grow: 1;
+    font-size: 18px;
+}
+
+.menu-item .price, .PR, .UP .price {
+    font-weight: bold;
+}
+
+.description, .event-description {
+    text-align: left; /* Align text to the left */
+    margin-bottom: 0px; /* Add margin below each description */
+    color: #333; /* Dark gray text color */
+}
+
+/* Course Section Styles */
+#Course {
+    text-align: center;
+    padding: 50px 0;
+}
+
+#Course .container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#Course h2 {
+    font-size: 28px;
+    color: #333; /* Dark gray text color */
+    margin-bottom: 20px;
+}
+
+#Course p {
+    font-size: 16px;
+    color: #666; /* Darker gray text color */
+    line-height: 1.6;
+}
+
+/* Video Section Styles */
+#videos {
+    background-color: #f9f9f9; /* Cream background */
+    padding: 40px 0; /* Add padding */
+}
+
+.container {
+    text-align: center; /* Center align content */
+}
+
+.container h2 {
+    color: #333; /* Dark gray text color */
+    font-size: 28px; /* Larger font size */
+    margin-bottom: 30px; /* Add spacing below heading */
+}
+
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.video-container video {
+    width: 100%; /* Set video width to fill its container */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 800px; /* Set maximum width for larger screens */
+}
+
+.btn-container {
+    margin-top: 20px; /* Add margin between videos and buttons */
+    display: flex; /* Use flexbox to align buttons */
+    justify-content: center; /* Center align buttons horizontally */
+    flex-wrap: wrap; /* Allow buttons to wrap to the next line on smaller screens */
+}
+
+.btn-container button {
+    margin: 5px; /* Add margin around each button */
+    padding: 10px 20px; /* Add padding to make buttons larger and more clickable */
+    font-size: 16px; /* Increase font size for better readability */
+    background-color: #007bff; /* Navy blue background */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border radius */
+    transition: background-color 0.3s ease; /* Add transition for hover effect */
+}
+
+.btn-container button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333; /* Dark gray footer background */
+    color: #fff; /* White text color */
+    padding: 20px 0; /* Add padding to the footer */
+    text-align: center; /* Center align text */
+}
