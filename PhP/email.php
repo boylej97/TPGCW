@@ -29,4 +29,4 @@ if (mail($to, $subject, $email_content, $headers)) {
 } else {
     print "Error: Invalid request.";
 }
-?>
+?>>
