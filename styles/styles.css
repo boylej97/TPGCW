@@ -3,49 +3,49 @@ body {
     font-family: "Arial", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #808080; /* Mid-tone gray background */
-    color: #333; /* Dark gray text color */
-    font-size: 16px; /* Base font size */
-    line-height: 1.6; /* Line height for better readability */
+    background-color: #808080;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Arial", sans-serif; /* Use Arial font for headings */
-    font-weight: bold; /* Bold font weight for headings */
-    color: #333; /* Dark gray text color for headings */
-    margin-top: 20px; /* Add spacing above headings */
-    margin-bottom: 10px; /* Add spacing below headings */
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 h1 {
-    font-size: 36px; /* Larger font size for h1 */
+    font-size: 36px;
 }
 
 h2 {
-    font-size: 30px; /* Large font size for h2 */
+    font-size: 30px;
 }
 
 h3 {
-    font-size: 24px; /* Medium font size for h3 */
+    font-size: 24px;
 }
 
 p {
-    margin-bottom: 20px; /* Add spacing below paragraphs */
+    margin-bottom: 20px;
 }
 
 a {
-    color: #007bff; /* Blue color for links */
-    text-decoration: none; /* Remove default underline from links */
-    transition: color 0.3s ease; /* Smooth transition for link color */
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #0056b3; /* Darker blue color on hover */
+    color: #0056b3;
 }
 
 /* Header Styles */
 header {
-    background-image: url('/images/course.png'); /* Set the background image */
+    background-image: url('/images/course.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -55,21 +55,21 @@ header {
 }
 
 .logo {
-    display: block; /* Make logo a block element */
-    text-align: center; /* Center the logo */
+    display: block;
+    text-align: center;
 }
 
 .logo img {
-    max-width: 200px; /* Adjust max width of the logo */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 200px;
+    height: auto;
 }
 
 /* Navigation Styles */
 nav {
-    text-align: center; /* Center align navigation links */
-    margin-top: 20px; /* Add margin to separate header and navigation */
-    background-color: #808080; /* Lighter shade of gray */
-    line-height: 40px; /* Set line height to match the height of the navigation bar */
+    text-align: center;
+    margin-top: 20px;
+    background-color: #808080;
+    line-height: 40px;
 }
 
 .nav-links {
@@ -88,31 +88,32 @@ nav {
 }
 
 .nav-links li a {
-    color: #fff; /* White text color */
-    background-color: #007bff; /* Navy blue background color */
+    color: #fff;
+    background-color: #007bff;
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 5px;
+    border: 1px solid #333; /* Add border */
     transition: background-color 0.3s ease;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .nav-links li a:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
 
 @media only screen and (max-width: 600px) {
     .nav-links {
-        padding: 0; /* Remove padding */
+        padding: 0;
     }
 
     .nav-links li {
-        margin-right: 10px; /* Reduce margin between links */
+        margin-right: 10px;
     }
 
     .nav-links li a {
-        padding: 8px 12px; /* Adjust padding */
-        font-size: 14px; /* Reduce font size */
+        padding: 8px 12px;
+        font-size: 14px;
     }
 }
 
@@ -120,237 +121,258 @@ nav {
 .welcome-section {
     padding: 20px 0;
     text-align: center;
-    background: linear-gradient(to bottom, #808080, #A9A9A9); /* Gradient background */
-    color: #000000; /* Text color */
+    background: linear-gradient(to bottom, #808080, #A9A9A9);
+    color: #000000;
 }
 
 .welcome-section h2 {
-    font-size: 32px; /* Increase heading size */
-    margin-bottom: 20px; /* Add spacing below heading */
+    font-size: 32px;
+    margin-bottom: 20px;
 }
 
 .welcome-section p {
-    font-size: 18px; /* Increase paragraph font size */
-    line-height: 1.6; /* Increase line height for better readability */
+    font-size: 18px;
+    line-height: 1.6;
 }
 
 .welcome-content {
-    text-align: center; /* Center align text */
-    max-width: 800px; /* Limit content width for better readability */
-    margin: 0 auto; /* Center content horizontally */
-    color: #000; /* Black text color */
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #000;
 }
 
 .welcome-content h2 {
-    font-size: 32px; /* Increase heading size */
-    margin-bottom: 20px; /* Add spacing below heading */
+    font-size: 32px;
+    margin-bottom: 20px;
 }
 
 .welcome-content p {
-    font-size: 18px; /* Increase paragraph font size */
-    line-height: 1.6; /* Increase line height for better readability */
-    margin-bottom: 30px; /* Add spacing below paragraphs */
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
 }
+
 /* Location Section Styles */
 .location-section {
     padding: 20px 0;
     text-align: center;
-    background: linear-gradient(to bottom, #A9A9A9, #C0C0C0); /* Gradient background */
+    background: linear-gradient(to bottom, #A9A9A9, #C0C0C0);
 }
 
 #map {
-    width: 33%; /* Set map width */
-    height: 600px; /* Set map height */
-    border: 3px solid #333; /* Add border */
-    border-radius: 8px; /* Add border radius */
+    width: 33%;
+    height: 600px;
+    border: 3px solid #333;
+    border-radius: 8px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    margin-left: auto; /* Center horizontally */
-    margin-right: auto; /* Center horizontally */
+    margin-left: auto;
+    margin-right: auto;
 }
-/* Media query for smaller screens */
+
 @media only screen and (max-width: 600px) {
     #map {
-        width: 400px; /* Set map width */
-        height: 320px; /* Reduce map height for smaller screens */
-       
+        width: 400px;
+        height: 320px;
     }
 }
+
 .location-info {
-    text-align: center; /* Center align text */
-    margin-top: 20px; /* Add top margin */
+    text-align: center;
+    margin-top: 20px;
 }
 
 .address, .contact-info {
-    margin-bottom: 20px; /* Add spacing between address and contact information */
+    margin-bottom: 20px;
 }
+
 .address a {
-    color: black; /* Set link color to black */
+    color: black;
 }
+
 .address p, .contact-info p {
-    font-size: 18px; /* Set font size */
-    line-height: 1.6; /* Set line height for better readability */
-    color: #333; /* Set text color */
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
 }
 
-
-/* Media query for smaller screens */
 @media only screen and (max-width: 600px) {
-    /* Style for mobile devices */
     .contact-info {
-        text-align: center; /* Center align text on mobile */
-        color: #000; /* Set text color to black */
+        text-align: center;
+        color: #000;
     }
 
     .phone {
-        display: block; /* Show phone number as block */
-        margin-bottom: 10px; /* Add margin below phone number */
-        color: #000; /* Set text color to black */
-        text-decoration: none; /* Remove underline */
+        display: block;
+        margin-bottom: 10px;
+        color: #000;
+        text-decoration: none;
     }
 
     .email {
-        display: block; /* Show email as block */
-        color: #000; /* Set text color to black */
+        display: block;
+        color: #000;
     }
 }
 
-
-/* Style for larger screens (PC) */
 .contact-info {
-    text-align: center; /* Center align text */
-    color: #000; /* Set text color to black */
+    text-align: center;
+    color: #000;
 }
 
 .phone, .email {
-    display: inline; /* Show phone number and email as inline */
-    margin-right: 20px; /* Add margin to separate phone number and email */
-    color: #000; /* Set text color to black */
+    display: inline;
+    margin-right: 20px;
+    color: #000;
 }
-
-
 
 /* Hours Section Styles */
 
 .hours-section {
-    padding: 10px 20px; /* Add padding to the sides */
+    padding: 10px 20px;
     text-align: center;
-    background: linear-gradient(to bottom, #C0C0C0, #D3D3D3); /* Gradient background */
+    background: linear-gradient(to bottom, #C0C0C0, #D3D3D3);
 }
 
 .hours-table {
-    margin: 0 auto; /* Center the table horizontally */
-    max-width: 800px; /* Limit the width of the table */
-    width: 100%; /* Make the table responsive */
-    border: 3px solid #333; /* gray border */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.75); /* Darker shadow */
-    border-radius: 8px; /* Add border radius */
+    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
+    border: 3px solid #333;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.75);
+    border-radius: 8px;
 }
 
 .hours-table th,
 .hours-table td {
-    padding: 10px; /* Add padding for readability */
-    border: 1px solid #555; /* Border color */
-    background-color: #f9f9f9; /* Cream background */
+    padding: 10px;
+    border: 1px solid #555;
+    background-color: #f9f9f9;
 }
 
 .hours-table th {
-    background-color: #333; /* Darker background color for header */
-    color: #fff; /* White text color */
-    font-weight: bold; /* Make the header text bold */
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
 }
+
 .hours-table td {
-    background-color: #666; /* Darker background color for table cells */
-    color: #fff; /* White text color */
+    background-color: #666;
+    color: #fff;
 }
 
 .hours-table tr:nth-child(even) td {
-    background-color: #555; /* Darker alternate row background color */
+    background-color: #555;
 }
 
 .hours-section h2 {
-    font-size: 28px; /* Increase heading size */
-    margin-bottom: 20px; /* Add spacing below heading */
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
 .hours-table {
-    margin: 0 auto; /* Center the table */
-    width: 100%; /* Make the table full width */
-    border-collapse: collapse; /* Collapse table borders */
+    margin: 0 auto;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .hours-table th, .hours-table td {
-    padding: 10px; /* Add padding */
-    border: 1px solid #ddd; /* Add border */
-    text-align: center; /* Center align text */
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
 }
 
 .hours-table th {
-    background-color: #333; /* Light gray background for header */
-    color: #999; /* Darker gray text color for the first column */
+    background-color: #333;
+    color: #999;
 }
+
 .hours-table td {
     font-size: 16px;
-    color: #000; /* Dark gray for text */
+    color: #000;
 }
 
 #book-now-section {
-    background-color: #D3D3D3; /* Background color */
-    text-align: center; /* Center-align content */
-    padding: 20px 0; /* Adjust padding as needed */
+    background-color: #D3D3D3;
+    text-align: center;
+    padding: 20px 0;
 }
 
 .container {
-    width: 80%; /* Adjust container width for better readability */
-    margin: 0 auto; /* Center the container horizontally */
+    width: 80%;
+    margin: 0 auto;
 }
-
 
 .book-now-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff; /* Navy blue for button background */
-    color: #fff; /* White for button text */
+    background-color: #007bff;
+    color: #fff;
     text-decoration: none;
     border-radius: 5px;
+    border: 1px solid #333; /* Add border */
     transition: background-color 0.3s ease;
     font-size: 16px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .book-now-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    color: #fff; /* White for button text */
+    background-color: #0056b3;
+    color: #fff;
 }
 
+* Menu Section Styles */
 #menu {
-    background-color: #f9f9f9; /* Cream background */
-    padding: 30px 20px; /* Add padding */
-    text-align: center; /* Center align text */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    transition: transform 0.3s ease; /* Add transition for hover effect */
+    background-color: #f9f9f9;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
 }
 
 #menu:hover {
-    transform: translateY(-5px); /* Move the section slightly upwards on hover */
+    transform: translateY(-5px);
 }
 
+
+/* Kitchen Welcome Message Styles */
 .kitchen_welcome {
-    max-width: 100%; /* Set maximum width */
-    margin: 0 auto; /* Center align horizontally */
-    padding: 0 10px; /* Add padding */
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+    color: #fff; /* Change text color to white */
 }
 
 .kitchen_welcome h2 {
-    font-size: 26px; /* Adjust font size */
-    color: #333; /* Text color */
-    margin-bottom: 15px; /* Add some space below the heading */
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .kitchen_welcome p {
-    font-size: 16px; /* Adjust font size */
-    color: #666; /* Text color */
-    line-height: 1.5; /* Increase line height for better readability */
+    font-size: 18px;
+    color: #f0f0f0; /* Lighten text color for better contrast */
+    line-height: 1.6;
+}
+
+.kitchen_welcome p::before {
+    content: "✨ "; /* Add a sparkle emoji before each paragraph */
+}
+
+.kitchen_welcome p::after {
+    content: " ✨"; /* Add a sparkle emoji after each paragraph */
+}
+
+.kitchen_welcome p:nth-child(odd) {
+    font-style: italic; /* Make odd paragraphs italic */
+}
+
+.kitchen_welcome p:nth-child(even) {
+    font-weight: bold; /* Make even paragraphs bold */
 }
 
 /* Item Menu Styles */
@@ -366,24 +388,25 @@ nav {
     margin-bottom: 30px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #fff; /* Cream background */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, #4f4f4f, #333); /* Add gradient background */
+    color: #fff;
 }
 
 .left:hover, .right:hover {
-    transform: translateY(-5px); /* Move the section slightly upwards on hover */
+    transform: translateY(-5px);
 }
 
 .left h2, .right h2 {
     text-align: center;
-    font-size: 20px; /* Increase font size */
-    color: #333; /* Text color */
-    margin-bottom: 20px; /* Add some space below the heading */
-    text-transform: uppercase; /* Convert text to uppercase */
-    letter-spacing: 1px; /* Add letter spacing */
-    border-bottom: 2px solid #007bff; /* Navy blue underline */
-    padding-bottom: 10px; /* Add padding below the underline */
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
 }
 
 @media only screen and (min-width: 600px) {
@@ -392,53 +415,57 @@ nav {
     }
 }
 
+
 /* Menu Category Styles */
 .menu-category, .Event-category {
     margin-bottom: 30px;
     padding: 15px;
     border-radius: 10px;
-    background-color: #f9f9f9; /* Cream background */
+    background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
 }
 
 .menu-category {
-    background-color: #e5e5e5; /* Light gray background */
+    background-color: #e5e5e5;
 }
+
 .Event-category {
-    background-color: #f9f9f9; /* Cream background */
-    border-radius: 10px; /* Rounded corners */
-    padding: 10px; /* Padding */
-    margin-bottom: 20px; /* Margin bottom for spacing */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
 }
 
 .Event-category h3 {
-    margin-top: 0; /* Remove top margin from h3 */
-    cursor: pointer; /* Cursor style */
+    margin-top: 0;
+    cursor: pointer;
 }
 
 .Event-category ul {
-    list-style: none; /* Remove list bullets */
-    padding: 0; /* Remove default padding */
-    margin: 0; /* Remove default margin */
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .Event-category ul li {
-    margin-bottom: 10px; /* Add bottom margin for spacing */
+    margin-bottom: 10px;
 }
 
 .Event-category ul li:last-child {
-    margin-bottom: 0; /* Remove bottom margin for last list item */
+    margin-bottom: 0;
 }
 
 .menu-category h3 {
     text-align: center;
     margin-bottom: 10px;
-    color: #333; /* Dark gray text color */
+    color: #333;
 }
 
 .menu-category ul {
-    padding: 0;
+    max-height: 200px; /* Set a maximum height for the list */
+    overflow-y: auto; /* Enable vertical scrolling */
+    list-style-type: none; /* Remove bullet points */
 }
 
 .menu-category y li {
@@ -450,42 +477,64 @@ nav {
 .menu-category li:last-child {
     border-bottom: none;
 }
+
 .kitchen_suply {
-    padding: 5px 0; /* Add padding */
-    text-align: center; /* Center align text */
-    color: #333; /* Dark gray text color */
-    font-size: 16px; /* Font size */
+    padding: 5px 0;
+    text-align: center;
+    color: #fff; /* Change text color to white */
+    font-size: 16px;
+    border-radius: 5px; /* Add border radius for better appearance */
 }
 /* Menu Item Styles */
 .menu-item {
-    margin-bottom: 0px;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #333;
+    padding: 20px; /* Added padding for spacing */
+    text-align: center; /* Align text left */
 }
 
 .menu-info, .PRevents-info, .UPevents-info {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Change flex direction to column */
+    justify-content: center; /* Center items vertically */
 }
+
 
 .menu-info strong {
     flex-grow: 1;
     font-size: 18px;
+    color: #333; /* Darken the text */
+
 }
 
 .menu-item .price, .PR, .UP .price {
+    text-align: center;
     font-weight: bold;
+    color: #333; /* Darken the text */
+    line-height: 1; /* Adjust line height */
+    margin-top: 5px; /* Adjust top margin */
 }
 
 .description, .event-description {
-    text-align: left; /* Align text to the left */
-    margin-bottom: 0px; /* Add margin below each description */
-    color: #333; /* Dark gray text color */
+    text-align: center;
+    color: #666; /* Adjust description text color */
+    font-size: 16px; /* Adjusted font size for better readability */
+    line-height: 1; /* Adjust line height */
+    margin-top: 5px; /* Adjust top margin */
 }
 
 /* Course Section Styles */
 #Course {
+    max-width: 100%;
     text-align: center;
-    padding: 50px 0;
+    padding: 20px 0;
+    background: linear-gradient(to bottom, #808080, #A9A9A9);
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Vertically center align items */
 }
 
 #Course .container {
@@ -494,66 +543,80 @@ nav {
 }
 
 #Course h2 {
-    font-size: 28px;
-    color: #333; /* Dark gray text color */
+    font-size: 32px;
+    color: #fff;
     margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 #Course p {
-    font-size: 16px;
-    color: #666; /* Darker gray text color */
-    line-height: 1.6;
+    margin-left: 10%;
+    margin-right:10%;
+    max-width: 100%;
+    font-size: 18px;
+    color: #f0f0f0; /* Lighten text color for better contrast */
+    line-height: 1.5;
 }
+
 
 /* Video Section Styles */
 #videos {
-    background-color: #f9f9f9; /* Cream background */
-    padding: 40px 0; /* Add padding */
+    background: linear-gradient(to bottom, #A9A9A9, #C0C0C0); /* Changed background to gradient */
+    padding: 40px 0;
 }
 
 .container {
-    text-align: center; /* Center align content */
+    text-align: center;
 }
 
 .container h2 {
-    color: #333; /* Dark gray text color */
-    font-size: 28px; /* Larger font size */
-    margin-bottom: 30px; /* Add spacing below heading */
+    color: #444;
+    font-size: 28px;
+    margin-bottom: 30px;
 }
 
 .video-container {
     display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     flex-wrap: wrap;
-    justify-content: center;
+    margin-bottom: 20px; /* Add margin for spacing */
 }
 
 .video-container video {
-    width: 100%; /* Set video width to fill its container */
-    height: auto; /* Maintain aspect ratio */
-    max-width: 800px; /* Set maximum width for larger screens */
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    border: 1px solid #333; /* Add border */
+    border-radius: 10px; /* Add border radius */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    margin-bottom: 20px; /* Add margin for spacing */
 }
 
 .btn-container {
-    margin-top: 20px; /* Add margin between videos and buttons */
-    display: flex; /* Use flexbox to align buttons */
-    justify-content: center; /* Center align buttons horizontally */
-    flex-wrap: wrap; /* Allow buttons to wrap to the next line on smaller screens */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .btn-container button {
-    margin: 5px; /* Add margin around each button */
-    padding: 10px 20px; /* Add padding to make buttons larger and more clickable */
-    font-size: 16px; /* Increase font size for better readability */
-    background-color: #007bff; /* Navy blue background */
-    color: #fff; /* White text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add border radius */
-    transition: background-color 0.3s ease; /* Add transition for hover effect */
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #333; /* Add border */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .btn-container button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
+
 /* Event Section Styles */
 .events-container {
     display: flex;
@@ -565,12 +628,14 @@ nav {
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .events-intro {
     font-size: 18px;
     line-height: 1.6;
-    color: #333; /* Dark gray text color */
-    margin-bottom: 20px; /* Add spacing below the paragraph */
+    color: #333;
+    margin-bottom: 20px;
 }
+
 .event-title {
     margin: 0;
     padding: 15px;
@@ -590,6 +655,7 @@ nav {
 .event.active .event-info {
     display: block;
 }
+
 /* Event Columns Styles */
 .events-columns {
     display: flex;
@@ -597,66 +663,67 @@ nav {
 }
 
 .events-column {
-    width: 48%; /* Adjust width to leave space between columns */
-    background-color: #f2f2f2; /* Light gray background */
+    width: 48%;
+    background-color: #f2f2f2;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6); /* Gradient background */
-    color: #333; /* Dark gray text color */
+    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
+    color: #333;
 }
 
 .events-column h2 {
-    color: #333; /* Dark gray text color */
-    margin-bottom: 20px; /* Add space below heading */
+    color: #333;
+    margin-bottom: 20px;
 }
 
 .event {
-    border-bottom: 1px solid #ddd; /* Add border between events */
-    padding-bottom: 20px; /* Add space below each event */
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
 }
 
 .event:last-child {
-    border-bottom: none; /* Remove border from last event */
+    border-bottom: none;
 }
 
 .event-title {
-    color: #333; /* Blue color for event title */
-    margin-bottom: 10px; /* Add space below title */
+    color: #333;
+    margin-bottom: 10px;
 }
 
 .event-date {
-    font-weight: bold; /* Make date text bold */
-    color: #666; /* Dark gray color for date */
+    font-weight: bold;
+    color: #666;
 }
 
 .event-description {
-    color: #444; /* Dark gray text color for description */
+    color: #444;
 }
-/* Adjustments for smaller screens */
+
 @media only screen and (max-width: 768px) {
     .events-columns {
-        flex-direction: column; /* Stack columns on smaller screens */
+        flex-direction: column;
     }
 
     .events-column {
-        width: 100%; /* Full width for each column on smaller screens */
-        margin-bottom: 30px; /* Add space between columns */
+        width: 100%;
+        margin-bottom: 30px;
     }
 }
+
 /* Contact Form Styles */
 .Contact {
-    max-width: 800px; /* Adjust maximum width as needed */
-    margin: 50px auto; /* Center the container vertically and horizontally */
-    padding: 20px; /* Add padding */
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    text-align: center; /* Center align the heading */
-    margin-bottom: 20px; /* Add margin below the heading */
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 form {
@@ -665,45 +732,45 @@ form {
 }
 
 .form-group {
-    margin-bottom: 20px; /* Add margin between form groups */
+    margin-bottom: 20px;
 }
 
 label {
-    font-weight: bold; /* Make labels bold */
-    margin-bottom: 5px; /* Add margin below labels */
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 input,
 textarea {
-    width: 95%; /* Make inputs and textareas fill the container */
-    padding: 10px; /* Add padding */
-    border: 1px solid #ccc; /* Add border */
-    border-radius: 5px; /* Add border radius */
-    margin-bottom: 10px; /* Add margin below inputs */
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 textarea {
-    resize: vertical; /* Allow vertical resizing of textarea */
+    resize: vertical;
 }
 
 button[type="submit"] {
-    background-color: #007bff; /* Navy blue background */
-    color: #fff; /* White text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add border radius */
-    padding: 10px 20px; /* Add padding */
-    cursor: pointer; /* Add pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth transition */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
 
 /* Footer Styles */
 footer {
-    background-color: #333; /* Dark gray footer background */
-    color: #fff; /* White text color */
-    padding: 20px 0; /* Add padding to the footer */
-    text-align: center; /* Center align text */
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
 }
