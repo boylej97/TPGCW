@@ -1,8 +1,10 @@
-function togglePRevents() {
-var PReventslist = document.getElementById('PRevents-list');
-PReventslist.style.display = (PReventslist.style.display === 'none') ? 'block' : 'none';
-}
-function toggleUPevents() {
-    var UPeventslist = document.getElementById('UPevents-list');
-    UPeventslist.style.display = (UPeventslist.style.display === 'none') ? 'block' : 'none';
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    const eventTitles = document.querySelectorAll('.event-title');
+    
+    eventTitles.forEach(title => {
+        title.addEventListener('click', function() {
+            const event = this.parentElement;
+            event.classList.toggle('active');
+        });
+    });
+});

@@ -554,7 +554,96 @@ nav {
 .btn-container button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+/* Event Section Styles */
+.events-container {
+    display: flex;
+    flex-direction: column;
+}
 
+.event {
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.events-intro {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333; /* Dark gray text color */
+    margin-bottom: 20px; /* Add spacing below the paragraph */
+}
+.event-title {
+    margin: 0;
+    padding: 15px;
+    cursor: pointer;
+    background-color: #ddd;
+}
+
+.event-info {
+    display: none;
+    padding: 15px;
+}
+
+.event-info p {
+    margin: 0;
+}
+
+.event.active .event-info {
+    display: block;
+}
+/* Event Columns Styles */
+.events-columns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.events-column {
+    width: 48%; /* Adjust width to leave space between columns */
+    background-color: #f2f2f2; /* Light gray background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6); /* Gradient background */
+    color: #333; /* Dark gray text color */
+}
+
+.events-column h2 {
+    color: #333; /* Dark gray text color */
+    margin-bottom: 20px; /* Add space below heading */
+}
+
+.event {
+    border-bottom: 1px solid #ddd; /* Add border between events */
+    padding-bottom: 20px; /* Add space below each event */
+}
+
+.event:last-child {
+    border-bottom: none; /* Remove border from last event */
+}
+
+.event-title {
+    color: #333; /* Blue color for event title */
+    margin-bottom: 10px; /* Add space below title */
+}
+
+.event-date {
+    font-weight: bold; /* Make date text bold */
+    color: #666; /* Dark gray color for date */
+}
+
+.event-description {
+    color: #444; /* Dark gray text color for description */
+}
+/* Adjustments for smaller screens */
+@media only screen and (max-width: 768px) {
+    .events-columns {
+        flex-direction: column; /* Stack columns on smaller screens */
+    }
+
+    .events-column {
+        width: 100%; /* Full width for each column on smaller screens */
+        margin-bottom: 30px; /* Add space between columns */
+    }
+}
 /* Contact Form Styles */
 .Contact {
     max-width: 800px; /* Adjust maximum width as needed */
