@@ -7,4 +7,4 @@ document.addEventListener('DOMContentLoaded', function() {
             event.classList.toggle('active');
         });
     });
-});
+});     
