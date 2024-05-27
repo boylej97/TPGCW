@@ -1,0 +1,102 @@
+/* events.css */
+
+.event {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; /* Add this */
+}
+
+.event:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.event-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+    cursor: pointer;
+}
+
+.event-date {
+    font-weight: bold;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.event-description {
+    color: #666;
+    margin-top: 10px;
+}
+
+.event-more-info {
+    display: none;
+    color: #555;
+    margin-top: 10px;
+}
+
+.event-details {
+    display: none;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    position: absolute; /* Add this */
+    top: 0; /* Add this */
+    left: 0; /* Add this */
+    right: 0; /* Add this */
+    z-index: 1; /* Add this */
+}
+
+.event-details img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.event-details-description {
+    color: #666;
+}
+
+.event.expanded .event-details {
+    display: block;
+}
+
+.close-details {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.event.expanded .close-details {
+    display: block;
+}
+
+@media only screen and (max-width: 768px) {
+    .events-columns {
+        flex-direction: column;
+    }
+
+    .event-title {
+        font-size: 1.2em;
+    }
+
+    .event-date {
+        font-size: 0.9em;
+    }
+
+    .event-description {
+        font-size: 0.9em;
+    }
+}

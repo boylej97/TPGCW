@@ -3,101 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
     <title>Course Overview</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/course.css">
     <script src="java/Videos.js"></script>
 </head>
 <body>
- 
-<header>
-    <div class="container">
-        <a href="#" class="logo"><img src="Images/Logo.png" alt="Logo"></a>
-    </div>
-</header>
-
-<nav id="nav-container" class="nav-links">
-    <ul>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="Course.html">Course</a></li>
-        <li><a href="https://visitors.brsgolf.com/torrancepark9#/course/1" target="_blank" rel="noopener">Book A Time</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="main.html">Return</a></li>
-    </ul>
-</nav>
-<section id="Course">
-    <div class="Course_Look">
-        <h2>Course Overview</h2>
-        <p>Experience the thrill of our 9-hole golf course, where every swing promises excitement and challenge in equal measure. Nestled amidst picturesque landscapes, our course offers a serene escape for golf enthusiasts of all levels. Whether you're a seasoned player or a newcomer to the game, our meticulously designed layout provides the perfect setting for an enjoyable round. Don't miss the opportunity to explore each hole with our immersive flyovers, offering a bird's-eye view of the course like never before. Come join us and discover the joy of golfing at Torrance Park.</p>
-    </div>
-</section>
- <!-- Video container -->
- <section id="videos">
-    <div class="container">
-        <h2>Course Flyovers</h2>
-        <p id="currentVideo">Current Video: </p>
-        <div class="video-container" id="videoContainer">
-            <video id="video1" controls style="display: none;">
-                <source src="Videos/video1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video2" controls style="display: none;">
-                <source src="Videos/video2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video3" controls style="display: none;">
-                <source src="Videos/video3.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video4" controls style="display: none;">
-                <source src="Videos/video4.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video5" controls style="display: none;">
-                <source src="Videos/video5.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video6" controls style="display: none;">
-                <source src="Videos/video6.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video7" controls style="display: none;">
-                <source src="Videos/video7.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video8" controls style="display: none;">
-                <source src="Videos/video8.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video9" controls style="display: none;">
-                <source src="Videos/video9.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <video id="video10" controls autoplay>
-                <source src="Videos/video10.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video><!-- Add more videos here -->
+    <header>
+        <div class="container">
+            <a href="#" class="logo"><img src="Images/Logo.png" alt="Logo"></a>
         </div>
-        <div class="btn-container">
-            <button onclick="toggleVideo('video1')">Hole 1</button>
-            <button onclick="toggleVideo('video2')">Hole 2</button>
-            <button onclick="toggleVideo('video3')">Hole 3</button>
-            <button onclick="toggleVideo('video4')">Hole 4</button>
-            <button onclick="toggleVideo('video5')">Hole 5</button><!-- Add more buttons for other videos -->
-            <button onclick="toggleVideo('video6')">Hole 6</button>
-            <button onclick="toggleVideo('video7')">Hole 7</button>
-            <button onclick="toggleVideo('video8')">Hole 8</button>
-            <button onclick="toggleVideo('video9')">Hole 9</button>
-        </div>
-    </div>
-</section>
-</div>
-<footer>
-    <div class="container">
-        <p>&copy; 2024. All rights reserved.</p>
-    </div>
-</footer>
+    </header>
 
+    <nav id="nav-container" class="nav-links">
+        <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="Course.html">Course</a></li>
+            <li><a href="https://visitors.brsgolf.com/torrancepark9#/course/1" target="_blank" rel="noopener">Book A Time</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="main.html">Return</a></li>
+        </ul>
+    </nav>
+    
+    <section id="Course">
+        <div class="Course_Look">
+            <h2>Course Overview</h2>
+            <p>Experience the thrill of our 9-hole golf course, where every swing promises excitement and challenge in equal measure. Nestled amidst picturesque landscapes, our course offers a serene escape for golf enthusiasts of all levels. Whether you're a seasoned player or a newcomer to the game, our meticulously designed layout provides the perfect setting for an enjoyable round. Don't miss the opportunity to explore each hole with our immersive flyovers, offering a bird's-eye view of the course like never before. Come join us and discover the joy of golfing at Torrance Park.</p>
+        </div>
+    </section>
+
+    <section id="videos">
+        <div class="container">
+            <h2>Course Flyovers</h2>
+            <p id="currentVideo">Current Video: </p>
+            <div class="video-container" id="videoContainer">
+                <iframe id="video1" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole01" style="display: block;"></iframe>
+                <iframe id="video2" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole02" style="display: none;"></iframe>
+                <iframe id="video3" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole03" style="display: none;"></iframe>
+                <iframe id="video4" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole04" style="display: none;"></iframe>
+                <iframe id="video5" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole05" style="display: none;"></iframe>
+                <iframe id="video6" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole06" style="display: none;"></iframe>
+                <iframe id="video7" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole07" style="display: none;"></iframe>
+                <iframe id="video8" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole08" style="display: none;"></iframe>
+                <iframe id="video9" src="https://w1gcms.club/externalvideo/video.php?syd=73H8BZazOuIQnsU3fob8&clubID=torrancepark&hole=hole09" style="display: none;"></iframe>
+            </div>
+            
+            <div class="btn-container">
+                <button onclick="toggleVideo('video1')">Hole 1</button>
+                <button onclick="toggleVideo('video2')">Hole 2</button>
+                <button onclick="toggleVideo('video3')">Hole 3</button>
+                <button onclick="toggleVideo('video4')">Hole 4</button>
+                <button onclick="toggleVideo('video5')">Hole 5</button>
+                <button onclick="toggleVideo('video6')">Hole 6</button>
+                <button onclick="toggleVideo('video7')">Hole 7</button>
+                <button onclick="toggleVideo('video8')">Hole 8</button>
+                <button onclick="toggleVideo('video9')">Hole 9</button>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>

@@ -1,10 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const eventTitles = document.querySelectorAll('.event-title');
-    
-    eventTitles.forEach(title => {
-        title.addEventListener('click', function() {
-            const event = this.parentElement;
-            event.classList.toggle('active');
+document.addEventListener("DOMContentLoaded", function() {
+    const events = document.querySelectorAll('.event');
+
+    events.forEach(event => {
+        event.querySelector('.event-title').addEventListener('click', function() {
+            event.classList.toggle('expanded');
+        });
+
+        event.querySelector('.close-details').addEventListener('click', function() {
+            event.classList.remove('expanded');
         });
     });
-});      
+});

@@ -1,53 +1,51 @@
-// Function to toggle videos
 function toggleVideo(videoId) {
-    var video10 = document.getElementById('video10');
-    var currentVideo = document.getElementById(videoId);
+    // Hide all iframes
+    var iframes = document.getElementsByTagName('iframe');
+    for (var i = 0; i < iframes.length; i++) {
+        iframes[i].style.display = 'none';
+    }
 
-    // Pause and hide all videos except the clicked video
-    var videos = document.querySelectorAll('video');
-    videos.forEach(function(video) {
-        if (video.id !== videoId) {
-            video.pause(); // Pause other videos
-            video.currentTime = 0; // Reset video to start
-            video.style.display = 'none'; // Hide other videos
+    // Show the selected iframe
+    document.getElementById(videoId).style.display = 'block';
+    document.getElementById('currentVideo').innerText = "Current Video: " + videoId.replace('video', 'Hole ');
+}
+
+window.onload = function() {
+    var iframes = document.getElementsByTagName('iframe');
+    for (var i = 0; i < iframes.length; i++) {
+        iframes[i].onload = function() {
+            this.style.height = this.contentWindow.document.body.scrollHeight + 'px';
+        };
+    }
+};
+
+// Function to adjust iframe height based on its content
+function adjustIframeHeight() {
+    var iframes = document.getElementsByTagName('iframe');
+    for (var i = 0; i < iframes.length; i++) {
+        var iframe = iframes[i];
+        var body = iframe.contentWindow.document.body;
+        if (body) {
+            // Reset the iframe height to auto to get the correct scrollHeight
+            iframe.style.height = 'auto';
+            // Get the scrollHeight of the body inside the iframe
+            var height = body.scrollHeight;
+            // Set the iframe height to fit its content
+            iframe.style.height = height + 'px';
         }
-    });
-
-    // If the clicked video is already playing, hide it
-    if (currentVideo.style.display !== 'none') {
-        currentVideo.pause(); // Pause the clicked video
-        currentVideo.style.display = 'none'; // Hide the clicked video
-
-        // Play video10 if the same button is clicked again
-        video10.style.display = 'block'; // Show video10
-        video10.play(); // Play video10
-
-        // Update current video placeholder for video10
-        var currentVideoText = document.getElementById("currentVideo");
-        currentVideoText.textContent = "Current Video: Full Course Flyover";
-    } else {
-        // Hide and pause video10 if it's playing
-        if (video10.style.display !== 'none') {
-            video10.pause(); // Pause video10
-            video10.style.display = 'none'; // Hide video10
-        }
-
-        currentVideo.style.display = 'block'; // Show the clicked video
-        currentVideo.play(); // Play the clicked video
-
-        // Update current video placeholder for other videos
-        var currentVideoText = document.getElementById("currentVideo");
-        currentVideoText.textContent = "Current Video: Hole " + videoId.split("video")[1];
     }
 }
 
-// Auto play video10 when the page loads
-window.onload = function() {
-    var video10 = document.getElementById('video10');
-    video10.style.display = 'block'; // Show video10
-    video10.play(); // Auto play video10
+// Function to adjust iframe heights on window resize
+function adjustIframesOnResize() {
+    // Call adjustIframeHeight when window resizes
+    window.addEventListener('resize', function() {
+        adjustIframeHeight();
+    });
+}
 
-    // Update current video placeholder for video10
-    var currentVideoText = document.getElementById("currentVideo");
-    currentVideoText.textContent = "Current Video: Full Course Flyover";
-};
+// Call adjustIframeHeight on window load and resize
+window.addEventListener("load", function() {
+    adjustIframeHeight();
+    adjustIframesOnResize();
+});

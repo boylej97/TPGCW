@@ -1,0 +1,247 @@
+/* main.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Welcome Section */
+#welcome {
+    padding: 50px 0;
+    text-align: center; /* Center-align the content */
+}
+
+/* Welcome Section Heading */
+#welcome h2 {
+    font-size: 2.5em;
+    color: #333; /* Dark gray text color */
+    margin-bottom: 20px;
+}
+
+/* Welcome Section Paragraph */
+#welcome p {
+    font-size: 1.2em;
+    color: #666; /* Light gray text color */
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+/* Location Section */
+#location {
+    background-color: #f9f9f9; /* Light gray background color */
+    padding: 50px 0;
+}
+
+/* Location Section Heading */
+#location h2 {
+    font-size: 2.5em;
+    color: #333; /* Dark gray text color */
+    text-align: center; /* Center-align the heading */
+    margin-bottom: 20px;
+}
+
+/* Location Section Address */
+.address {
+    text-align: center; /* Center-align the address */
+    margin-bottom: 30px;
+}
+
+/* Location Section Contact Info */
+.contact-info {
+    text-align: center; /* Center-align the contact info */
+}
+
+/* Location Section Contact Info Links */
+.contact-info a {
+    color: #007bff; /* Blue link color */
+    text-decoration: none;
+    transition: color 0.3s; /* Smooth color transition on hover */
+}
+
+.contact-info a:hover {
+    color: #0056b3; /* Darker blue color on hover */
+}
+
+/* Google Maps */
+#map {
+    height: 400px; /* Set the height of the map container */
+    margin-bottom: 20px; /* Add some space between the map and the address/contact info */
+    margin-left: auto; /* Align the left side of the map to the center */
+    margin-right: auto; /* Align the right side of the map to the center */
+    max-width: 60%; /* Limit the maximum width of the map */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a drop shadow */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 8px; /* Add some border radius for a rounded appearance */
+}
+
+/* Hours Section */
+#hours {
+    background-color: #ffffff; /* White background color */
+    padding: 50px 0;
+}
+
+/* Hours Section Heading */
+#hours h2 {
+    font-size: 2.5em;
+    color: #333; /* Dark gray text color */
+    text-align: center; /* Center-align the heading */
+    margin-bottom: 20px;
+}
+
+
+
+/* Hours Section */
+.hours-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center the section */
+    max-width: 800px; /* Limit the width */
+}
+
+.hours-section h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.hours-table {
+    width: 80%; /* Adjust the width as needed */
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc; /* Border around the table */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Drop shadow */
+}
+
+.hours-table th,
+.hours-table td {
+    padding: 10px; /* Adjust the padding as needed */
+    border-right: 1px solid #ccc; /* Right border for each cell */
+    border-bottom: 1px solid #ccc; /* Bottom border for each cell */
+}
+
+.hours-table th {
+    background-color: #f8f8f8; /* Background color for header cells */
+    font-weight: bold;
+}
+
+.hours-table tr:last-child td {
+    border-bottom: none; /* Remove bottom border for the last row */
+}
+
+.hours-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Background color for even rows */
+}
+
+.hours-section p {
+    color: #666;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+
+#book-now-section {
+    margin-top: 20px; /* Adjust the margin as needed */
+    text-align: center; /* Center the button horizontally */
+}
+
+.book_Now {
+    display: inline-block; /* Make the button inline-block to center it */
+}
+
+.book-now-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    text-decoration: none; /* Remove default underline */
+}
+
+.book-now-button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Centering */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Heading */
+h2 {
+    font-size: 2em;
+    color: #333; /* Dark gray text color */
+    margin-bottom: 20px;
+}
+
+/* Paragraph */
+p {
+    font-size: 1.2em;
+    color: #666; /* Light gray text color */
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Welcome Section */
+#welcome {
+    padding: 50px 0;
+}
+
+/* Location Section */
+#location {
+    padding: 50px 0;
+}
+
+/* Hours Section */
+#hours {
+    padding: 50px 0;
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .welcome-section,
+    .location-section,
+    .hours-section {
+        padding: 30px 10px;
+    }
+
+    .welcome-section h2,
+    .location-section h2,
+    .hours-section h2 {
+        font-size: 2em;
+    }
+
+    .welcome-section p,
+    .location-section p,
+    .hours-section p {
+        font-size: 1em;
+    }
+
+    .book-now-button {
+        padding: 8px 16px;
+    }
+
+    .footer {
+        padding: 15px 0;
+    }
+}
