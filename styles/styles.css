@@ -1,5 +1,6 @@
 /* styles.css */
 
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -54,34 +55,82 @@ header {
 
 .nav-links ul li a {
     text-decoration: none;
-    color: #fff; /* White text */
+    color: #0b3d91; /* Navy text */
     font-weight: bold;
     padding: 10px 20px; /* Same padding as the "Book Now" button */
     border-radius: 5px; /* Same border radius as the "Book Now" button */
-    transition: background-color 0.3s;
-    background-color: #007bff; /* Blue color for the first link */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add drop shadow */
 }
 
 .nav-links ul li a:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0b3d91; /* Navy background on hover */
+    color: #fff; /* White text on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+.nav-links ul li a.book-now {
+    background-color: #0b3d91; /* Navy blue background */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Add padding for a button-like appearance */
+    border-radius: 5px; /* Rounded corners */
 }
 
 /* Footer */
 footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
+    background-color: #fff; /* White background */
     padding: 20px 0;
-    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Add drop shadow to the top */
 }
 
-footer p {
-    margin: 0;
+/* Columns for menu and events */
+.menu-columns,
+.events-columns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-column,
+.events-column {
+    width: 48%;
+}
+
+.left-column,
+.right-column {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Shared styles for both columns */
+.menu-item,
+.event {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.menu-item:hover,
+.event:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 @media only screen and (max-width: 768px) {
-    .container {
-        padding: 10px;
+    .menu-columns,
+    .events-columns {
+        flex-direction: column;
+    }
+
+    .menu-column,
+    .events-column {
+        width: 100%;
+        margin-bottom: 20px;
     }
 }

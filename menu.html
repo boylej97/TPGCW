@@ -6,7 +6,6 @@
     <title>Menu</title>
     <link rel="stylesheet" href="styles/menu.css">
     <link rel="stylesheet" href="styles/styles.css">
-    <script src="java/Menu.js"></script>
 </head>
 <body>
     <header>
@@ -31,29 +30,53 @@
         <h1>Menu</h1>
         <p class="menu-intro">Step into the world of excitement with our vibrant menu! Discover a delightful array of culinary delights at our establishment. From savory starters to mouthwatering main courses, from satisfying sandwiches, toasties, and wraps to indulgent desserts, we offer a diverse menu crafted to tantalize every palate. Our chefs prepare each dish with care, using only the freshest ingredients, ensuring that every bite is a flavorful experience. Don't forget to inquire about our specials, featuring unique creations that add an extra touch of excitement to your dining experience.</p>
         <div class="menu-columns">
-            <div class="menu-column">
-                <div class="menu">
-                    <h2 class="menu-title">Starter 1</h2>
-                    <p class="menu-price">$5.99</p>
-                    <p class="menu-description">A delicious starter to begin your meal.</p>
-                </div>
-                <div class="menu">
-                    <h2 class="menu-title">Starter 2</h2>
-                    <p class="menu-price">$6.99</p>
-                    <p class="menu-description">A delightful mix of flavors.</p>
-                </div>
-            </div>
-            <div class="menu-column">
-                <div class="menu">
-                    <h2 class="menu-title">Main Course 1</h2>
+            <div class="menu-column left-column">
+                <h2>Food Menu</h2>
+                <div class="menu-item">
+                    <h3 class="menu-title">Dish 1</h3>
                     <p class="menu-price">$12.99</p>
-                    <p class="menu-description">A hearty main course for your meal.</p>
+                    <p class="menu-description">A brief description of Dish 1.</p>
+                    <div class="menu-details">
+                        <img src="Images/dish1.jpg" alt="Dish 1 Image">
+                        <p class="menu-details-description">Detailed information about Dish 1 with images and more text.</p>
+                        <span class="close-details">&larr; Return</span>
+                    </div>
                 </div>
-                <div class="menu">
-                    <h2 class="menu-title">Main Course 2</h2>
+                <div class="menu-item">
+                    <h3 class="menu-title">Dish 2</h3>
                     <p class="menu-price">$14.99</p>
-                    <p class="menu-description">A delicious main course with fresh ingredients.</p>
+                    <p class="menu-description">A brief description of Dish 2.</p>
+                    <div class="menu-details">
+                        <img src="Images/dish2.jpg" alt="Dish 2 Image">
+                        <p class="menu-details-description">Detailed information about Dish 2 with images and more text.</p>
+                        <span class="close-details">&larr; Return</span>
+                    </div>
                 </div>
+                <!-- Add more food items as needed -->
+            </div>
+            <div class="menu-column right-column">
+                <h2>Drinks Menu</h2>
+                <div class="menu-item">
+                    <h3 class="menu-title">Drink 1</h3>
+                    <p class="menu-price">$6.99</p>
+                    <p class="menu-description">A brief description of Drink 1.</p>
+                    <div class="menu-details">
+                        <img src="Images/drink1.jpg" alt="Drink 1 Image">
+                        <p class="menu-details-description">Detailed information about Drink 1 with images and more text.</p>
+                        <span class="close-details">&larr; Return</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <h3 class="menu-title">Drink 2</h3>
+                    <p class="menu-price">$5.99</p>
+                    <p class="menu-description">A brief description of Drink 2.</p>
+                    <div class="menu-details">
+                        <img src="Images/drink2.jpg" alt="Drink 2 Image">
+                        <p class="menu-details-description">Detailed information about Drink 2 with images and more text.</p>
+                        <span class="close-details">&larr; Return</span>
+                    </div>
+                </div>
+                <!-- Add more drink items as needed -->
             </div>
         </div>
     </div>
@@ -63,5 +86,7 @@
             <p>&copy; 2024. All rights reserved.</p>
         </div>
     </footer>
+
+    <script src="scripts/menu.js"></script>
 </body>
 </html>

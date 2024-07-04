@@ -1,7 +1,9 @@
+/* menu.css */
+
 .menu-intro,
 .menu-column,
-.menu {
-    background-color: #f8f9fa; /* Light gray background */
+.menu-item {
+    background-color: #f2f2f2; /* Light gray background */
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -9,14 +11,15 @@
     transition: background-color 0.3s;
 }
 
-.menu:hover {
-    background-color: #e9ecef; /* Lighter gray on hover */
+.menu-item:hover {
+    background-color: #e0e0e0; /* Lighter gray on hover */
 }
 
 .menu-title {
     font-size: 1.5em;
     margin-bottom: 10px;
     color: #333;
+    cursor: pointer;
 }
 
 .menu-price {
@@ -29,25 +32,55 @@
     color: #666;
 }
 
-.menu-columns {
-    display: flex;
-    justify-content: space-between;
+.menu-details {
+    display: none;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    position: relative;
 }
 
-.menu-column {
-    flex: 1;
-    margin: 0 10px;
+.menu-details img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.menu-details-description {
+    color: #666;
+}
+
+.menu-item.expanded .menu-details {
+    display: block;
+}
+
+.close-details {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item.expanded .close-details {
+    display: block;
 }
 
 @media only screen and (max-width: 768px) {
     .menu-intro,
     .menu-column,
-    .menu {
-        padding: 15px;
+    .menu-item {
+        padding: 10px;
     }
 
     .menu-title {
-        font-size: 1.3em;
+        font-size: 1.2em;
     }
 
     .menu-price {
@@ -56,13 +89,5 @@
 
     .menu-description {
         font-size: 0.9em;
-    }
-
-    .menu-columns {
-        flex-direction: column;
-    }
-
-    .menu-column {
-        margin: 0 0 20px 0;
     }
 }

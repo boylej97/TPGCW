@@ -1,18 +1,18 @@
 /* events.css */
 
+.events-intro,
+.events-column,
 .event {
-    background-color: #fff;
+    background-color: #f2f2f2; /* Light gray background */
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative; /* Add this */
+    transition: background-color 0.3s;
 }
 
 .event:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #e0e0e0; /* Lighter gray on hover */
 }
 
 .event-title {
@@ -25,18 +25,11 @@
 .event-date {
     font-weight: bold;
     color: #888;
-    margin-bottom: 10px;
 }
 
 .event-description {
+    margin-top: 10px;
     color: #666;
-    margin-top: 10px;
-}
-
-.event-more-info {
-    display: none;
-    color: #555;
-    margin-top: 10px;
 }
 
 .event-details {
@@ -46,11 +39,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    position: absolute; /* Add this */
-    top: 0; /* Add this */
-    left: 0; /* Add this */
-    right: 0; /* Add this */
-    z-index: 1; /* Add this */
+    position: relative;
 }
 
 .event-details img {
@@ -84,8 +73,10 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .events-columns {
-        flex-direction: column;
+    .events-intro,
+    .events-column,
+    .event {
+        padding: 10px;
     }
 
     .event-title {
