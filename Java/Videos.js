@@ -1,12 +1,16 @@
 function toggleVideo(videoId) {
-    // Hide all iframes
+    // Hide all iframes and stop videos
     var iframes = document.getElementsByTagName('iframe');
     for (var i = 0; i < iframes.length; i++) {
         iframes[i].style.display = 'none';
+        iframes[i].src = iframes[i].src; // Stop the video
     }
 
-    // Show the selected iframe
-    document.getElementById(videoId).style.display = 'block';
+    // Show the selected iframe and autoplay the video
+    var selectedIframe = document.getElementById(videoId);
+    selectedIframe.style.display = 'block';
+    selectedIframe.src += "&autoplay=1"; // Add autoplay to the src
+
     document.getElementById('currentVideo').innerText = "Current Video: " + videoId.replace('video', 'Hole ');
 }
 
