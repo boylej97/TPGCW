@@ -2,111 +2,966 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <title>Home</title>
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <script src="java/hours.js"></script>
-    <script src="java/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCXKzRRcSLJ2PWP4YKDgnOYw-Iqn2RACA&callback=initMap" async defer></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Territory Conquest</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #gameCanvas {
+            display: block;
+        }
+        #uiContainer {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            pointer-events: none;
+        }
+        #playerInfo {
+            margin-bottom: 5px;
+        }
+        #leaderboard {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            width: 180px;
+        }
+        #leaderboard h3 {
+            margin-top: 0;
+            text-align: center;
+        }
+        .leaderItem {
+            display: flex;
+            justify-content: space-between;
+            margin: 3px 0;
+        }
+        #startScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        #nameInput {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            width: 250px;
+            text-align: center;
+        }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #startButton:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
- 
-<header>
-    <div class="container">
-        <a href="#" class="logo"><img src="Images/Logo.png" alt="Logo"></a>
+    <canvas id="gameCanvas"></canvas>
+    
+    <div id="uiContainer">
+        <div id="playerInfo">Territory: <span id="territorySize">0</span>%</div>
+        <div>Players: <span id="playerCount">0</span></div>
     </div>
-</header>
+    
+    <div id="leaderboard">
+        <h3>Leaderboard</h3>
+        <div id="leaderboardContent"></div>
+    </div>
+    
+    <div id="startScreen">
+        <h1>Territory Conquest</h1>
+        <input type="text" id="nameInput" placeholder="Enter your name" maxlength="15">
+        <button id="startButton">Play</button>
+    </div>
 
-<nav id="nav-container" class="nav-links">
-    <ul>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="Course.html">Course</a></li>
-        <li><a href="https://visitors.brsgolf.com/torrancepark9#/course/1" target="_blank" rel="noopener">Book A Time</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="contact.html">Contact</a></li>
+    <script>
+        // Game constants
+        const GRID_SIZE = 1000000; // 1 million grid size (using a smaller visible portion for performance)
+        const VISIBLE_GRID_SIZE = 1000; // Visible portion of the grid
+        const CELL_SIZE = 1; // Smaller cell size
+        const AI_PLAYER_COUNT = 99; // 99 AI bots
+        const COLORS = [
+            '#ff4136', '#0074D9', '#2ECC40', '#FFDC00', '#B10DC9',
+            '#FF851B', '#7FDBFF', '#3D9970', '#01FF70', '#F012BE',
+            '#85144b', '#39CCCC', '#111111', '#AAAAAA', '#DDDDAA',
+            '#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231',
+            '#911eb4', '#42d4f4', '#f032e6', '#bfef45', '#fabebe',
+            '#469990', '#e6beff', '#9A6324', '#fffac8', '#800000',
+            '#aaffc3', '#808000', '#ffd8b1', '#000075', '#a9a9a9',
+            '#808080', '#A52A2A', '#FF7F50', '#6495ED', '#DC143C',
+            '#00FFFF', '#00008B', '#008B8B', '#B8860B', '#A9A9A9',
+            '#006400', '#BDB76B', '#8B008B', '#556B2F', '#FF8C00'
+        ];
         
-    </ul>
-</nav>
+        // Random name generation
+        const NAME_PREFIXES = ['Iron', 'Golden', 'Silver', 'Crimson', 'Azure', 'Emerald', 'Shadow', 'Thunder', 'Frost', 'Fire', 'Storm', 'Dark', 'Light', 'Royal', 'Mystic'];
+        const NAME_SUFFIXES = ['Empire', 'Kingdom', 'Nation', 'Republic', 'Alliance', 'Dominion', 'State', 'Realm', 'Dynasty', 'Union', 'Federation', 'Legion', 'Army', 'Armada', 'Coalition'];
+        
+        // Terrain types
+        const TERRAIN = {
+            WATER: 0,
+            LAND: 1,
+            MOUNTAIN: 2
+        };
 
-<section id="welcome" class="welcome-section">
-    <div class="container">
-        <h2>Welcome to Torrance Park</h2>
-        <p>Torrance Park Golf Course provides an enjoyable test of golf for golfers of all abilities. The 9-hole par 33 course extends over 2500 yards across the gently undulating moorland setting of North Lanarkshire. All the clubs in a golfer’s bag will be tested; challenging tee shots that require long, accurate drives, and finely balanced iron shots on the shorter Par 3s. The fairways demand intelligent strategic play, and the gently undulating greens provide a test for golfers of all abilities.</p>
-    </div>
-</section>
-
-<section id="location" class="location-section">
-    <div class="location-info">
-        <div class="address">
-            <div id="map"></div>
-            <p><strong>Address:</strong> <a href="https://www.google.com/maps/dir/?api=1&destination=Torrance+Park+Golf+Course,+2+Morris+Drive,+Motherwell,+North+Lanarkshire,+ML1+5UU" target="_blank">Torrance Park Golf Course, 2 Morris Drive,<br> Motherwell, North Lanarkshire, ML1 5UU</a></p>
-
-        </div>
-        <div class="contact-info">
-            <!-- Phone number link for mobile devices -->
-            <p class="phone"><strong>Phone:</strong> <span class="tel-link">01698 735160</span></p>
-            <!-- Email link for all devices -->
-            <p><strong>Email:</strong> <a class="email" href="mailto:enquiries@torranceparkgolf.co.uk?subject=Inquiry&body=Hello%20Torrance%20Park%20Golf%20Team,">enquiries@torranceparkgolf.co.uk</a></p>
-        </div>
-    </div>
-</section>
-
-<section id="hours" class="hours-section">
-    <div class="container">
-        <h2>Opening Hours</h2>
-        <p id="opening-hours-message">Please wait while we determine if the club is open...</p>
-        <table class="hours-table">
-            <tr>
-                <th>Day</th>
-                <th>Opening Hours</th>
-            </tr>
-            <tr>
-                <td>Monday</td>
-                <td>8:00 AM - 8:00 PM</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>8:00 AM - 8:00 PM</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>8:00 AM - 6:00 PM</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>8:00 AM - 6:00 PM</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>8:00 AM - 11:00 PM</td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td>8:00 AM - 11:00 PM</td>
-            </tr>
-            <tr>
-                <td>Sunday</td>
-                <td>8:00 AM - 6:00 PM</td>
-            </tr>
-        </table>
-        <p >Please note clubhouse and bar closing times may be earlier if there are no customers.</p>
-    </div>
-
-<div id="book-now-section">
-    <div class="book_Now">
-        <a href="#" class="book-now-button">Book Now</a>
-    </div>
-</div>
-</section>
-<footer>
-    <div class="container">
-        <p>&copy; 2024. All rights reserved.</p>
-    </div>
-</footer>
-
+        // Game state
+        let canvas, ctx;
+        let grid = []; // This will be a sparse array for memory efficiency
+        let terrainGrid = []; // Store terrain information
+        let players = [];
+        let playerIndex = -1;
+        let gameRunning = false;
+        let mouseX = 0, mouseY = 0;
+        let viewX = 0, viewY = 0;
+        let zoom = 1;
+        let boats = []; // For boat units
+        
+        // Initialize the game
+        function init() {
+            canvas = document.getElementById('gameCanvas');
+            ctx = canvas.getContext('2d');
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            canvas.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            canvas.addEventListener('click', handleClick);
+            
+            document.getElementById('startButton').addEventListener('click', startGame);
+            document.getElementById('nameInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') startGame();
+            });
+        }
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        function createGrid() {
+            // Initialize grid and terrain as sparse arrays for memory efficiency
+            grid = {};
+            terrainGrid = {};
+            
+            // Generate terrain using a chunked approach
+            generateTerrain();
+        }
+        
+        function generateTerrain() {
+            // Generate terrain in the visible area first
+            const centerX = Math.floor(VISIBLE_GRID_SIZE / 2);
+            const centerY = Math.floor(VISIBLE_GRID_SIZE / 2);
+            
+            // Use simplex noise-like approach for terrain generation
+            for (let y = 0; y < VISIBLE_GRID_SIZE; y++) {
+                for (let x = 0; x < VISIBLE_GRID_SIZE; x++) {
+                    const worldX = x + centerX - Math.floor(VISIBLE_GRID_SIZE / 2);
+                    const worldY = y + centerY - Math.floor(VISIBLE_GRID_SIZE / 2);
+                    
+                    // Initialize grid cell if needed
+                    if (!grid[worldY]) grid[worldY] = {};
+                    if (!terrainGrid[worldY]) terrainGrid[worldY] = {};
+                    
+                    // Generate terrain type
+                    const terrain = generateTerrainAt(worldX, worldY);
+                    terrainGrid[worldY][worldX] = terrain;
+                    
+                    // Initialize ownership
+                    grid[worldY][worldX] = {
+                        owner: -1,
+                        strength: 0
+                    };
+                }
+            }
+        }
+        
+        function generateTerrainAt(x, y) {
+            // Simple deterministic noise function
+            const noiseValue = Math.sin(x * 0.01) * Math.sin(y * 0.01) + 
+                               Math.sin(x * 0.02 + y * 0.01) * 0.5 + 
+                               Math.sin(x * 0.03 + y * 0.02) * 0.25;
+            
+            if (noiseValue < -0.3) {
+                return TERRAIN.WATER; // Deep water
+            } else if (noiseValue < 0.1) {
+                return TERRAIN.WATER; // Shallow water
+            } else if (noiseValue > 0.8) {
+                return TERRAIN.MOUNTAIN; // Mountains
+            } else {
+                return TERRAIN.LAND; // Land
+            }
+        }
+        
+        // Load or generate terrain on demand
+        function ensureTerrainLoaded(x, y) {
+            if (!terrainGrid[y] || terrainGrid[y][x] === undefined) {
+                if (!terrainGrid[y]) terrainGrid[y] = {};
+                terrainGrid[y][x] = generateTerrainAt(x, y);
+            }
+            
+            if (!grid[y] || grid[y][x] === undefined) {
+                if (!grid[y]) grid[y] = {};
+                grid[y][x] = {
+                    owner: -1,
+                    strength: 0
+                };
+            }
+            
+            return terrainGrid[y][x];
+        }
+        }
+        
+        function createPlayers() {
+            players = [];
+            
+            // Create human player
+            const playerName = document.getElementById('nameInput').value.trim() || "Player";
+            players.push({
+                name: playerName,
+                color: COLORS[0],
+                territory: 0,
+                alive: true,
+                isAI: false,
+                hasBoats: false
+            });
+            
+            // Create AI players with random names
+            for (let i = 0; i < AI_PLAYER_COUNT; i++) {
+                const namePrefix = NAME_PREFIXES[Math.floor(Math.random() * NAME_PREFIXES.length)];
+                const nameSuffix = NAME_SUFFIXES[Math.floor(Math.random() * NAME_SUFFIXES.length)];
+                const aiName = `${namePrefix} ${nameSuffix}`;
+                
+                players.push({
+                    name: aiName,
+                    color: COLORS[(i + 1) % COLORS.length],
+                    territory: 0,
+                    alive: true,
+                    isAI: true,
+                    aiTarget: { x: 0, y: 0 },
+                    aiNextTargetTime: 0,
+                    aiAggressiveness: 0.5 + Math.random() * 0.5, // Random AI personality
+                    hasBoats: false
+                });
+            }
+            
+            // Assign random starting territories on land only
+            for (let i = 0; i < players.length; i++) {
+                let startX, startY;
+                let placed = false;
+                let attempts = 0;
+                
+                // Try to find an empty spot on land
+                while (!placed && attempts < 1000) {
+                    attempts++;
+                    
+                    // Find random coordinates within the visible grid for performance
+                    startX = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
+                    startY = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
+                    
+                    // Check if this is valid land
+                    let isValidStart = true;
+                    for (let y = startY - 2; y <= startY + 2; y++) {
+                        for (let x = startX - 2; x <= startX + 2; x++) {
+                            // Load terrain if needed
+                            const terrain = ensureTerrainLoaded(x, y);
+                            
+                            // Check if land and not occupied
+                            if (terrain !== TERRAIN.LAND || 
+                                (grid[y] && grid[y][x] && grid[y][x].owner !== -1)) {
+                                isValidStart = false;
+                                break;
+                            }
+                        }
+                        if (!isValidStart) break;
+                    }
+                    
+                    if (isValidStart) {
+                        // Place initial territory (5x5)
+                        for (let y = startY - 2; y <= startY + 2; y++) {
+                            for (let x = startX - 2; x <= startX + 2; x++) {
+                                if (!grid[y]) grid[y] = {};
+                                grid[y][x] = {
+                                    owner: i,
+                                    strength: 50
+                                };
+                            }
+                        }
+                        placed = true;
+                        
+                        // Center the view on the player's territory
+                        if (i === 0) {
+                            viewX = startX * CELL_SIZE - canvas.width / 2;
+                            viewY = startY * CELL_SIZE - canvas.height / 2;
+                        }
+                    }
+                }
+                
+                // If couldn't place after many attempts, try one last time with less constraints
+                if (!placed) {
+                    console.log(`Failed to place player ${i} after many attempts, trying with fewer constraints`);
+                    
+                    while (!placed) {
+                        startX = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
+                        startY = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
+                        
+                        // Check just the center tile
+                        ensureTerrainLoaded(startX, startY);
+                        
+                        if (terrainGrid[startY][startX] === TERRAIN.LAND && 
+                            (!grid[startY] || !grid[startY][startX] || grid[startY][startX].owner === -1)) {
+                            
+                            // Just place a single tile
+                            if (!grid[startY]) grid[startY] = {};
+                            grid[startY][startX] = {
+                                owner: i,
+                                strength: 100
+                            };
+                            placed = true;
+                            
+                            // Center view if player
+                            if (i === 0) {
+                                viewX = startX * CELL_SIZE - canvas.width / 2;
+                                viewY = startY * CELL_SIZE - canvas.height / 2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        function startGame() {
+            createGrid();
+            createPlayers();
+            
+            document.getElementById('startScreen').style.display = 'none';
+            gameRunning = true;
+            playerIndex = 0;
+            
+            // Start the game loop
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function handleClick(e) {
+            if (!gameRunning || playerIndex === -1 || !players[playerIndex].alive) return;
+            
+            // Convert screen coordinates to grid coordinates
+            const gridX = Math.floor((e.clientX + viewX) / CELL_SIZE);
+            const gridY = Math.floor((e.clientY + viewY) / CELL_SIZE);
+            
+            // Validate coordinates
+            if (gridX < 0 || gridX >= GRID_SIZE || gridY < 0 || gridY >= GRID_SIZE) return;
+            
+            // Send troops to the clicked location
+            sendPlayerTroops(gridX, gridY);
+        }
+        
+        function sendPlayerTroops(targetX, targetY) {
+            // Check if target is in the grid
+            if (targetX < 0 || targetX >= GRID_SIZE || targetY < 0 || targetY >= GRID_SIZE) {
+                return;
+            }
+            
+            // Ensure terrain is loaded for target
+            ensureTerrainLoaded(targetX, targetY);
+            
+            // Find the player's territory cells in the visible area for performance
+            const territoryCells = [];
+            const viewStartX = Math.floor(viewX / CELL_SIZE);
+            const viewStartY = Math.floor(viewY / CELL_SIZE);
+            const viewEndX = Math.ceil((viewX + canvas.width) / CELL_SIZE);
+            const viewEndY = Math.ceil((viewY + canvas.height) / CELL_SIZE);
+            
+            for (let y = viewStartY; y < viewEndY; y++) {
+                if (!grid[y]) continue;
+                
+                for (let x = viewStartX; x < viewEndX; x++) {
+                    if (grid[y][x] && grid[y][x].owner === playerIndex) {
+                        territoryCells.push({ x, y });
+                    }
+                }
+            }
+            
+            // Sort cells by distance to the target
+            territoryCells.sort((a, b) => {
+                const distA = Math.hypot(a.x - targetX, a.y - targetY);
+                const distB = Math.hypot(b.x - targetX, b.y - targetY);
+                return distA - distB;
+            });
+            
+            // Get target terrain
+            const targetTerrain = terrainGrid[targetY] && terrainGrid[targetY][targetX] 
+                ? terrainGrid[targetY][targetX] : ensureTerrainLoaded(targetX, targetY);
+            
+            // Send troops (move half of the strength from each cell)
+            let troopsSent = false;
+            
+            territoryCells.forEach(cell => {
+                if (!grid[cell.y] || !grid[cell.y][cell.x]) return;
+                
+                const cellTerrain = terrainGrid[cell.y] && terrainGrid[cell.y][cell.x]
+                    ? terrainGrid[cell.y][cell.x] : ensureTerrainLoaded(cell.x, cell.y);
+                
+                const strength = grid[cell.y][cell.x].strength;
+                const troopStrength = Math.floor(strength / 2);
+                
+                if (troopStrength > 0) {
+                    grid[cell.y][cell.x].strength -= troopStrength;
+                    
+                    // Check if we need to create a boat
+                    const needsBoat = (targetTerrain === TERRAIN.WATER && cellTerrain === TERRAIN.LAND) ||
+                                     (targetTerrain === TERRAIN.LAND && cellTerrain === TERRAIN.WATER);
+                    
+                    if (needsBoat && players[playerIndex].hasBoats) {
+                        // Create a boat unit
+                        createBoat(cell.x, cell.y, targetX, targetY, troopStrength, playerIndex);
+                        troopsSent = true;
+                    } else if (targetTerrain === TERRAIN.WATER && !players[playerIndex].hasBoats) {
+                        // Can't send troops to water without boats
+                        grid[cell.y][cell.x].strength += troopStrength; // Refund troops
+                    } else {
+                        // Create a normal land path
+                        createTroopPath(cell.x, cell.y, targetX, targetY, troopStrength, playerIndex);
+                        troopsSent = true;
+                    }
+                }
+            });
+            
+            // Research boats if we tried to send troops to water
+            if (targetTerrain === TERRAIN.WATER && !players[playerIndex].hasBoats && troopsSent) {
+                // If player tried to target water, automatically research boats
+                researchBoats(playerIndex);
+            }
+        }
+        
+        function createBoat(startX, startY, endX, endY, strength, owner) {
+            boats.push({
+                x: startX,
+                y: startY,
+                targetX: endX,
+                targetY: endY,
+                strength: strength,
+                owner: owner,
+                speed: 0.5, // Boats move slower
+                progress: 0
+            });
+        }
+        
+        function researchBoats(playerIdx) {
+            if (players[playerIdx].hasBoats) return;
+            
+            // Unlock boats for this player
+            players[playerIdx].hasBoats = true;
+            
+            // Notify player
+            if (playerIdx === playerIndex) {
+                const notification = document.createElement('div');
+                notification.textContent = "Boats researched! You can now cross water.";
+                notification.style.position = 'absolute';
+                notification.style.bottom = '20px';
+                notification.style.left = '50%';
+                notification.style.transform = 'translateX(-50%)';
+                notification.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                notification.style.color = 'white';
+                notification.style.padding = '10px 20px';
+                notification.style.borderRadius = '5px';
+                notification.style.zIndex = '1000';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'opacity 1s';
+                    setTimeout(() => notification.remove(), 1000);
+                }, 3000);
+            }
+        }
+        }
+        
+        function createTroopPath(startX, startY, endX, endY, strength) {
+            // Simplified troop movement - move in a straight line
+            const dx = endX - startX;
+            const dy = endY - startY;
+            const distance = Math.hypot(dx, dy);
+            
+            if (distance === 0) return;
+            
+            const stepX = dx / distance;
+            const stepY = dy / distance;
+            
+            let x = startX;
+            let y = startY;
+            
+            const moveStep = () => {
+                x += stepX;
+                y += stepY;
+                
+                const gridX = Math.floor(x);
+                const gridY = Math.floor(y);
+                
+                if (gridX >= 0 && gridX < GRID_SIZE && gridY >= 0 && gridY < GRID_SIZE) {
+                    const cell = grid[gridY][gridX];
+                    
+                    if (cell.owner === playerIndex) {
+                        // Add strength to own territory
+                        cell.strength += strength;
+                    } else if (cell.owner === -1) {
+                        // Claim empty territory
+                        cell.owner = playerIndex;
+                        cell.strength = strength;
+                    } else {
+                        // Battle with enemy territory
+                        if (cell.strength < strength) {
+                            // Victory - take over the territory
+                            cell.owner = playerIndex;
+                            cell.strength = strength - cell.strength;
+                        } else {
+                            // Defeat - reduce enemy strength
+                            cell.strength -= strength;
+                        }
+                    }
+                }
+                
+                // Continue movement if not reached target
+                if (Math.abs(gridX - endX) > 1 || Math.abs(gridY - endY) > 1) {
+                    setTimeout(moveStep, 100);
+                }
+            };
+            
+            // Start movement
+            setTimeout(moveStep, 100);
+        }
+        
+        function updateAI() {
+            const now = Date.now();
+            
+            for (let i = 1; i < players.length; i++) {
+                const player = players[i];
+                
+                if (!player.alive || !player.isAI) continue;
+                
+                // Update AI target periodically
+                if (now >= player.aiNextTargetTime) {
+                    // Choose a new target
+                    player.aiNextTargetTime = now + 5000 + Math.random() * 10000;
+                    
+                    // Find own territory center
+                    let centerX = 0, centerY = 0, count = 0;
+                    
+                    for (let y = 0; y < GRID_SIZE; y++) {
+                        for (let x = 0; x < GRID_SIZE; x++) {
+                            if (grid[y][x].owner === i) {
+                                centerX += x;
+                                centerY += y;
+                                count++;
+                            }
+                        }
+                    }
+                    
+                    if (count > 0) {
+                        centerX = Math.floor(centerX / count);
+                        centerY = Math.floor(centerY / count);
+                        
+                        // Choose a random direction to expand
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = 10 + Math.random() * 15;
+                        
+                        player.aiTarget = {
+                            x: Math.floor(centerX + Math.cos(angle) * distance),
+                            y: Math.floor(centerY + Math.sin(angle) * distance)
+                        };
+                        
+                        // Clamp to grid bounds
+                        player.aiTarget.x = Math.max(0, Math.min(GRID_SIZE - 1, player.aiTarget.x));
+                        player.aiTarget.y = Math.max(0, Math.min(GRID_SIZE - 1, player.aiTarget.y));
+                        
+                        // Send troops to target
+                        aiSendTroops(i, player.aiTarget.x, player.aiTarget.y);
+                    }
+                }
+            }
+        }
+        
+        function aiSendTroops(ai, targetX, targetY) {
+            // Similar to player troop sending but for AI
+            const territoryCells = [];
+            
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    if (grid[y][x].owner === ai) {
+                        territoryCells.push({ x, y });
+                    }
+                }
+            }
+            
+            // Sort by distance
+            territoryCells.sort((a, b) => {
+                const distA = Math.hypot(a.x - targetX, a.y - targetY);
+                const distB = Math.hypot(b.x - targetX, b.y - targetY);
+                return distA - distB;
+            });
+            
+            // Send only from the nearest cells (optimization)
+            const sendLimit = Math.min(territoryCells.length, 30);
+            
+            for (let i = 0; i < sendLimit; i++) {
+                const cell = territoryCells[i];
+                const strength = grid[cell.y][cell.x].strength;
+                const troopStrength = Math.floor(strength * 0.3); // AI sends fewer troops
+                
+                if (troopStrength > 0) {
+                    grid[cell.y][cell.x].strength -= troopStrength;
+                    createAITroopPath(ai, cell.x, cell.y, targetX, targetY, troopStrength);
+                }
+            }
+        }
+        
+        function createAITroopPath(ai, startX, startY, endX, endY, strength) {
+            // Similar to player troop path but for AI
+            const dx = endX - startX;
+            const dy = endY - startY;
+            const distance = Math.hypot(dx, dy);
+            
+            if (distance === 0) return;
+            
+            const stepX = dx / distance;
+            const stepY = dy / distance;
+            
+            let x = startX;
+            let y = startY;
+            
+            const moveStep = () => {
+                x += stepX;
+                y += stepY;
+                
+                const gridX = Math.floor(x);
+                const gridY = Math.floor(y);
+                
+                if (gridX >= 0 && gridX < GRID_SIZE && gridY >= 0 && gridY < GRID_SIZE) {
+                    const cell = grid[gridY][gridX];
+                    
+                    if (cell.owner === ai) {
+                        cell.strength += strength;
+                    } else if (cell.owner === -1) {
+                        cell.owner = ai;
+                        cell.strength = strength;
+                    } else {
+                        if (cell.strength < strength) {
+                            cell.owner = ai;
+                            cell.strength = strength - cell.strength;
+                        } else {
+                            cell.strength -= strength;
+                        }
+                    }
+                }
+                
+                if (Math.abs(gridX - endX) > 1 || Math.abs(gridY - endY) > 1) {
+                    setTimeout(moveStep, 150); // AI troops move slower
+                }
+            };
+            
+            setTimeout(moveStep, 150);
+        }
+        
+        function updateTerritory() {
+            // Reset territory counts
+            players.forEach(player => {
+                player.territory = 0;
+                player.alive = false;
+            });
+            
+            // Count territories in visible area (we'll use this as a sample)
+            let totalClaimed = 0;
+            const viewStartX = Math.floor(viewX / CELL_SIZE);
+            const viewStartY = Math.floor(viewY / CELL_SIZE);
+            const viewEndX = Math.ceil((viewX + canvas.width) / CELL_SIZE);
+            const viewEndY = Math.ceil((viewY + canvas.height) / CELL_SIZE);
+            
+            for (let y = viewStartY; y < viewEndY; y++) {
+                if (!grid[y]) continue;
+                
+                for (let x = viewStartX; x < viewEndX; x++) {
+                    if (grid[y][x] && grid[y][x].owner !== -1) {
+                        players[grid[y][x].owner].territory++;
+                        players[grid[y][x].owner].alive = true;
+                        totalClaimed++;
+                    }
+                }
+            }
+            
+            // Convert to percentages (using visible area as a sample)
+            const visibleArea = (viewEndX - viewStartX) * (viewEndY - viewStartY);
+            if (totalClaimed > 0) {
+                players.forEach(player => {
+                    player.territory = player.territory / visibleArea * 100;
+                });
+            }
+            
+            // Natural strength growth for territories in visible area
+            for (let y = viewStartY; y < viewEndY; y++) {
+                if (!grid[y]) continue;
+                
+                for (let x = viewStartX; x < viewEndX; x++) {
+                    if (grid[y][x] && grid[y][x].owner !== -1) {
+                        // Growth rate depends on terrain
+                        const terrain = terrainGrid[y] && terrainGrid[y][x] 
+                            ? terrainGrid[y][x] : ensureTerrainLoaded(x, y);
+                        
+                        let growthRate = 0.1;
+                        if (terrain === TERRAIN.LAND) {
+                            growthRate = 0.15; // Better growth on land
+                        } else if (terrain === TERRAIN.WATER) {
+                            growthRate = 0.05; // Slower growth on water
+                        } else if (terrain === TERRAIN.MOUNTAIN) {
+                            growthRate = 0.2; // Best growth on mountains
+                        }
+                        
+                        grid[y][x].strength += growthRate;
+                    }
+                }
+            }
+            
+            // Update boats
+            updateBoats();
+            
+            // Update UI
+            updateUI();
+        }
+        
+        function updateBoats() {
+            for (let i = boats.length - 1; i >= 0; i--) {
+                const boat = boats[i];
+                
+                // Move boat towards target
+                const dx = boat.targetX - boat.x;
+                const dy = boat.targetY - boat.y;
+                const distance = Math.hypot(dx, dy);
+                
+                if (distance < 0.1) {
+                    // Boat reached destination
+                    ensureTerrainLoaded(Math.floor(boat.targetX), Math.floor(boat.targetY));
+                    
+                    if (!grid[Math.floor(boat.targetY)]) {
+                        grid[Math.floor(boat.targetY)] = {};
+                    }
+                    
+                    const targetCell = grid[Math.floor(boat.targetY)][Math.floor(boat.targetX)];
+                    
+                    if (!targetCell) {
+                        grid[Math.floor(boat.targetY)][Math.floor(boat.targetX)] = {
+                            owner: boat.owner,
+                            strength: boat.strength
+                        };
+                    } else if (targetCell.owner === boat.owner) {
+                        targetCell.strength += boat.strength;
+                    } else if (targetCell.owner === -1) {
+                        targetCell.owner = boat.owner;
+                        targetCell.strength = boat.strength;
+                    } else {
+                        // Battle
+                        if (targetCell.strength < boat.strength) {
+                            targetCell.owner = boat.owner;
+                            targetCell.strength = boat.strength - targetCell.strength;
+                        } else {
+                            targetCell.strength -= boat.strength;
+                        }
+                    }
+                    
+                    // Remove boat
+                    boats.splice(i, 1);
+                } else {
+                    // Move boat
+                    boat.progress += boat.speed;
+                    if (boat.progress >= 1) {
+                        boat.progress = 0;
+                        
+                        boat.x += (dx / distance) * 1;
+                        boat.y += (dy / distance) * 1;
+                    }
+                }
+            }
+        }
+        
+        function updateUI() {
+            // Player info
+            if (playerIndex !== -1 && players[playerIndex]) {
+                document.getElementById('territorySize').textContent = players[playerIndex].territory.toFixed(1);
+            }
+            
+            // Player count
+            const alivePlayers = players.filter(p => p.alive).length;
+            document.getElementById('playerCount').textContent = alivePlayers;
+            
+            // Leaderboard
+            const leaderboardContent = document.getElementById('leaderboardContent');
+            leaderboardContent.innerHTML = '';
+            
+            // Sort players by territory
+            const sortedPlayers = [...players]
+                .filter(p => p.alive)
+                .sort((a, b) => b.territory - a.territory);
+            
+            for (let i = 0; i < Math.min(sortedPlayers.length, 10); i++) {
+                const player = sortedPlayers[i];
+                const isHuman = !player.isAI;
+                
+                const item = document.createElement('div');
+                item.className = 'leaderItem';
+                
+                const name = document.createElement('div');
+                name.textContent = player.name + (isHuman ? ' (You)' : '');
+                name.style.fontWeight = isHuman ? 'bold' : 'normal';
+                
+                const score = document.createElement('div');
+                score.textContent = player.territory.toFixed(1) + '%';
+                
+                const colorIndicator = document.createElement('div');
+                colorIndicator.style.width = '10px';
+                colorIndicator.style.height = '10px';
+                colorIndicator.style.backgroundColor = player.color;
+                colorIndicator.style.display = 'inline-block';
+                colorIndicator.style.marginRight = '5px';
+                
+                name.prepend(colorIndicator);
+                
+                item.appendChild(name);
+                item.appendChild(score);
+                leaderboardContent.appendChild(item);
+            }
+        }
+        
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Calculate visible range
+            const startX = Math.floor(viewX / CELL_SIZE);
+            const startY = Math.floor(viewY / CELL_SIZE);
+            const endX = Math.ceil((viewX + canvas.width) / CELL_SIZE);
+            const endY = Math.ceil((viewY + canvas.height) / CELL_SIZE);
+            
+            // Draw grid
+            for (let y = Math.max(0, startY); y < Math.min(GRID_SIZE, endY); y++) {
+                for (let x = Math.max(0, startX); x < Math.min(GRID_SIZE, endX); x++) {
+                    const cell = grid[y][x];
+                    
+                    if (cell.owner !== -1) {
+                        const screenX = x * CELL_SIZE - viewX;
+                        const screenY = y * CELL_SIZE - viewY;
+                        
+                        ctx.fillStyle = players[cell.owner].color;
+                        ctx.fillRect(screenX, screenY, CELL_SIZE, CELL_SIZE);
+                        
+                        // Draw border for better visibility
+                        ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+                        ctx.strokeRect(screenX, screenY, CELL_SIZE, CELL_SIZE);
+                    }
+                }
+            }
+            
+            // Draw grid lines
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.beginPath();
+            
+            for (let x = startX; x <= endX; x++) {
+                const screenX = x * CELL_SIZE - viewX;
+                ctx.moveTo(screenX, 0);
+                ctx.lineTo(screenX, canvas.height);
+            }
+            
+            for (let y = startY; y <= endY; y++) {
+                const screenY = y * CELL_SIZE - viewY;
+                ctx.moveTo(0, screenY);
+                ctx.lineTo(canvas.width, screenY);
+            }
+            
+            ctx.stroke();
+        }
+        
+        function gameLoop() {
+            if (gameRunning) {
+                // Pan the view based on mouse position
+                const panSpeed = 15;
+                const panMargin = 50;
+                
+                if (mouseX < panMargin) viewX -= panSpeed;
+                if (mouseX > canvas.width - panMargin) viewX += panSpeed;
+                if (mouseY < panMargin) viewY -= panSpeed;
+                if (mouseY > canvas.height - panMargin) viewY += panSpeed;
+                
+                // Clamp view to grid bounds
+                viewX = Math.max(0, Math.min(GRID_SIZE * CELL_SIZE - canvas.width, viewX));
+                viewY = Math.max(0, Math.min(GRID_SIZE * CELL_SIZE - canvas.height, viewY));
+                
+                // Update game state
+                updateTerritory();
+                updateAI();
+                
+                // Render
+                render();
+                
+                // Check for game over
+                if (playerIndex !== -1 && !players[playerIndex].alive) {
+                    gameOver("Defeat");
+                } else {
+                    const alivePlayers = players.filter(p => p.alive).length;
+                    if (alivePlayers === 1 && players[playerIndex].alive) {
+                        gameOver("Victory");
+                    }
+                }
+                
+                requestAnimationFrame(gameLoop);
+            }
+        }
+        
+        function gameOver(result) {
+            gameRunning = false;
+            
+            const startScreen = document.getElementById('startScreen');
+            startScreen.style.display = 'flex';
+            
+            const title = startScreen.querySelector('h1');
+            title.textContent = result === "Victory" ? "Victory!" : "Game Over";
+            
+            const input = document.getElementById('nameInput');
+            input.style.display = 'none';
+            
+            const button = document.getElementById('startButton');
+            button.textContent = "Play Again";
+            button.onclick = function() {
+                location.reload();
+            };
+        }
+        
+        // Start the game when the page loads
+        window.onload = init;
+    </script>
 </body>
 </html>
