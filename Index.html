@@ -1,967 +1,604 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Territory Conquest</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-        #gameCanvas {
-            display: block;
-        }
-        #uiContainer {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: #333;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            pointer-events: none;
-        }
-        #playerInfo {
-            margin-bottom: 5px;
-        }
-        #leaderboard {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            width: 180px;
-        }
-        #leaderboard h3 {
-            margin-top: 0;
-            text-align: center;
-        }
-        .leaderItem {
-            display: flex;
-            justify-content: space-between;
-            margin: 3px 0;
-        }
-        #startScreen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-        #nameInput {
-            margin: 20px 0;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-            width: 250px;
-            text-align: center;
-        }
-        #startButton {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #startButton:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-    
-    <div id="uiContainer">
-        <div id="playerInfo">Territory: <span id="territorySize">0</span>%</div>
-        <div>Players: <span id="playerCount">0</span></div>
-    </div>
-    
-    <div id="leaderboard">
-        <h3>Leaderboard</h3>
-        <div id="leaderboardContent"></div>
-    </div>
-    
-    <div id="startScreen">
-        <h1>Territory Conquest</h1>
-        <input type="text" id="nameInput" placeholder="Enter your name" maxlength="15">
-        <button id="startButton">Play</button>
-    </div>
+import React, { useState, useEffect } from 'react';
+import { Shield, Sword, Heart, Coins, BookOpen, ArrowUp, Award, Map, Activity, Zap, User, ChevronRight, ChevronDown, Skull, ShoppingBag } from 'lucide-react';
 
-    <script>
-        // Game constants
-        const GRID_SIZE = 1000000; // 1 million grid size (using a smaller visible portion for performance)
-        const VISIBLE_GRID_SIZE = 1000; // Visible portion of the grid
-        const CELL_SIZE = 1; // Smaller cell size
-        const AI_PLAYER_COUNT = 99; // 99 AI bots
-        const COLORS = [
-            '#ff4136', '#0074D9', '#2ECC40', '#FFDC00', '#B10DC9',
-            '#FF851B', '#7FDBFF', '#3D9970', '#01FF70', '#F012BE',
-            '#85144b', '#39CCCC', '#111111', '#AAAAAA', '#DDDDAA',
-            '#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231',
-            '#911eb4', '#42d4f4', '#f032e6', '#bfef45', '#fabebe',
-            '#469990', '#e6beff', '#9A6324', '#fffac8', '#800000',
-            '#aaffc3', '#808000', '#ffd8b1', '#000075', '#a9a9a9',
-            '#808080', '#A52A2A', '#FF7F50', '#6495ED', '#DC143C',
-            '#00FFFF', '#00008B', '#008B8B', '#B8860B', '#A9A9A9',
-            '#006400', '#BDB76B', '#8B008B', '#556B2F', '#FF8C00'
-        ];
-        
-        // Random name generation
-        const NAME_PREFIXES = ['Iron', 'Golden', 'Silver', 'Crimson', 'Azure', 'Emerald', 'Shadow', 'Thunder', 'Frost', 'Fire', 'Storm', 'Dark', 'Light', 'Royal', 'Mystic'];
-        const NAME_SUFFIXES = ['Empire', 'Kingdom', 'Nation', 'Republic', 'Alliance', 'Dominion', 'State', 'Realm', 'Dynasty', 'Union', 'Federation', 'Legion', 'Army', 'Armada', 'Coalition'];
-        
-        // Terrain types
-        const TERRAIN = {
-            WATER: 0,
-            LAND: 1,
-            MOUNTAIN: 2
+// Game data constants
+const CLASSES = [
+  { id: 'fighter', name: 'Fighter', icon: Sword, description: 'Masters of martial combat, skilled with a variety of weapons and armor.', 
+    bonuses: { strength: 2, constitution: 1, maxHp: 5, damage: 1 } },
+  { id: 'wizard', name: 'Wizard', icon: BookOpen, description: 'Scholarly magic-users capable of manipulating the fabric of reality.', 
+    bonuses: { intelligence: 2, wisdom: 1, mana: 5, spellPower: 1 } },
+  { id: 'rogue', name: 'Rogue', icon: Activity, description: 'Stealthy and agile, specialists in disarming traps and striking from shadows.', 
+    bonuses: { dexterity: 2, charisma: 1, critChance: 5, goldMultiplier: 0.1 } },
+  { id: 'cleric', name: 'Cleric', icon: Heart, description: 'Divine spellcasters who can heal wounds, cure ailments, and smite enemies.', 
+    bonuses: { wisdom: 2, charisma: 1, healPower: 2, defenseBonus: 1 } }
+];
+
+const LOCATIONS = [
+  { id: 'tavern', name: 'Rusty Dragon Tavern', minLevel: 1, type: 'rest', description: 'A cozy tavern where adventurers gather to rest and share tales.', 
+    rewards: { hpRegen: 5, manaRegen: 5 }, background: 'bg-amber-900' },
+  { id: 'forest', name: 'Whispering Woods', minLevel: 1, type: 'adventure', description: 'A mysterious forest filled with goblins and wildlife.',
+    enemies: ['goblin', 'wolf', 'bandit'], background: 'bg-emerald-800' },
+  { id: 'dungeon1', name: 'Forgotten Catacombs', minLevel: 3, type: 'adventure', description: 'Ancient burial chambers now home to undead and treasure.',
+    enemies: ['skeleton', 'zombie', 'ghoul'], background: 'bg-stone-800' },
+  { id: 'mine', name: 'Abandoned Mine', minLevel: 5, type: 'adventure', description: 'Once prosperous mine now overrun with kobolds and worse creatures.',
+    enemies: ['kobold', 'orc', 'rust_monster'], background: 'bg-amber-950' },
+  { id: 'mountain', name: 'Frostpeak Mountain', minLevel: 8, type: 'adventure', description: 'Treacherous mountain paths guarded by fierce yetis and frost giants.',
+    enemies: ['yeti', 'winter_wolf', 'frost_giant'], background: 'bg-cyan-900' },
+  { id: 'blacksmith', name: 'Dwarven Smithy', minLevel: 2, type: 'shop', description: 'Fine craftsman selling weapons and armor of exceptional quality.',
+    background: 'bg-orange-800' },
+  { id: 'magic_shop', name: 'Arcane Emporium', minLevel: 4, type: 'shop', description: 'Mystical shop full of scrolls, potions, and magical trinkets.',
+    background: 'bg-purple-900' }
+];
+
+const ENEMIES = {
+  'goblin': { name: 'Goblin', hp: 15, damage: 2, defense: 0, xp: 15, gold: 5, image: '👺' },
+  'wolf': { name: 'Wolf', hp: 20, damage: 3, defense: 0, xp: 20, gold: 3, image: '🐺' },
+  'bandit': { name: 'Bandit', hp: 25, damage: 4, defense: 1, xp: 25, gold: 10, image: '🗡️' },
+  'skeleton': { name: 'Skeleton', hp: 30, damage: 5, defense: 1, xp: 35, gold: 8, image: '💀' },
+  'zombie': { name: 'Zombie', hp: 40, damage: 4, defense: 2, xp: 40, gold: 7, image: '🧟' },
+  'ghoul': { name: 'Ghoul', hp: 35, damage: 6, defense: 1, xp: 45, gold: 12, image: '👻' },
+  'kobold': { name: 'Kobold', hp: 25, damage: 4, defense: 1, xp: 30, gold: 9, image: '🦎' },
+  'orc': { name: 'Orc', hp: 50, damage: 7, defense: 3, xp: 60, gold: 15, image: '👹' },
+  'rust_monster': { name: 'Rust Monster', hp: 40, damage: 5, defense: 4, xp: 65, gold: 20, image: '🦀' },
+  'yeti': { name: 'Yeti', hp: 70, damage: 9, defense: 4, xp: 90, gold: 25, image: '❄️' },
+  'winter_wolf': { name: 'Winter Wolf', hp: 60, damage: 8, defense: 3, xp: 85, gold: 20, image: '🐺' },
+  'frost_giant': { name: 'Frost Giant', hp: 100, damage: 12, defense: 6, xp: 120, gold: 40, image: '🧊' }
+};
+
+const ITEMS = {
+  weapons: [
+    { id: 'dagger', name: 'Dagger', cost: 25, damage: 3, requiredLevel: 1 },
+    { id: 'shortsword', name: 'Shortsword', cost: 50, damage: 5, requiredLevel: 2 },
+    { id: 'longsword', name: 'Longsword', cost: 120, damage: 8, requiredLevel: 4 },
+    { id: 'greatsword', name: 'Greatsword', cost: 300, damage: 12, requiredLevel: 7 },
+    { id: 'enchanted_sword', name: 'Enchanted Sword', cost: 800, damage: 15, requiredLevel: 10 }
+  ],
+  armor: [
+    { id: 'cloth', name: 'Cloth Armor', cost: 20, defense: 1, requiredLevel: 1 },
+    { id: 'leather', name: 'Leather Armor', cost: 60, defense: 3, requiredLevel: 2 },
+    { id: 'chainmail', name: 'Chainmail', cost: 150, defense: 5, requiredLevel: 4 },
+    { id: 'platemail', name: 'Platemail', cost: 400, defense: 8, requiredLevel: 7 },
+    { id: 'enchanted_armor', name: 'Enchanted Armor', cost: 900, defense: 12, requiredLevel: 10 }
+  ],
+  potions: [
+    { id: 'minor_healing', name: 'Minor Healing Potion', cost: 15, effect: { hp: 20 }, requiredLevel: 1 },
+    { id: 'healing', name: 'Healing Potion', cost: 40, effect: { hp: 50 }, requiredLevel: 3 },
+    { id: 'greater_healing', name: 'Greater Healing Potion', cost: 100, effect: { hp: 125 }, requiredLevel: 6 }
+  ]
+};
+
+const SKILLS = {
+  fighter: [
+    { id: 'second_wind', name: 'Second Wind', description: 'Recover 25% of max HP', cooldown: 60, level: 2 },
+    { id: 'power_attack', name: 'Power Attack', description: 'Deal 150% damage on next attack', cooldown: 30, level: 4 },
+    { id: 'cleave', name: 'Cleave', description: 'Attack all enemies at once for 75% damage', cooldown: 45, level: 7 }
+  ],
+  wizard: [
+    { id: 'magic_missile', name: 'Magic Missile', description: 'Deal 15 magic damage, ignoring defense', cooldown: 20, level: 2 },
+    { id: 'fireball', name: 'Fireball', description: 'Deal 40 damage to all enemies', cooldown: 45, level: 4 },
+    { id: 'arcane_shield', name: 'Arcane Shield', description: 'Absorb the next 50 damage taken', cooldown: 60, level: 7 }
+  ],
+  rogue: [
+    { id: 'sneak_attack', name: 'Sneak Attack', description: 'Deal 200% damage on next attack', cooldown: 30, level: 2 },
+    { id: 'evade', name: 'Evade', description: '75% chance to dodge the next attack', cooldown: 40, level: 4 },
+    { id: 'backstab', name: 'Backstab', description: 'Deal 300% damage, with guaranteed critical hit', cooldown: 60, level: 7 }
+  ],
+  cleric: [
+    { id: 'heal', name: 'Heal', description: 'Recover 50 HP', cooldown: 30, level: 2 },
+    { id: 'bless', name: 'Bless', description: 'Increase damage by 25% for 30 seconds', cooldown: 45, level: 4 },
+    { id: 'divine_intervention', name: 'Divine Intervention', description: 'Fully heal and remove all negative effects', cooldown: 120, level: 7 }
+  ]
+};
+
+// Create a function to calculate XP required for each level
+const calculateXpToLevel = (level) => Math.floor(100 * Math.pow(1.5, level - 1));
+
+// Main game component
+const DnDIdleGame = () => {
+  // Game state
+  const [gameState, setGameState] = useState('intro'); // intro, character_creation, playing
+  const [player, setPlayer] = useState({
+    name: '',
+    class: '',
+    level: 1,
+    xp: 0,
+    xpToLevel: calculateXpToLevel(1),
+    gold: 10,
+    stats: {
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 10
+    },
+    hp: 20,
+    maxHp: 20,
+    mana: 10,
+    maxMana: 10,
+    damage: 2,
+    defense: 0,
+    critChance: 5,
+    equipment: {
+      weapon: null,
+      armor: null
+    },
+    inventory: {
+      potions: [],
+      misc: []
+    },
+    skills: []
+  });
+  
+  // Location & combat state
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [inCombat, setInCombat] = useState(false);
+  const [currentEnemy, setCurrentEnemy] = useState(null);
+  const [combatLog, setCombatLog] = useState([]);
+  const [autoAttack, setAutoAttack] = useState(false);
+  const [currentTab, setCurrentTab] = useState('status');
+  
+  // Game loop (runs every second)
+  useEffect(() => {
+    const gameInterval = setInterval(() => {
+      if (gameState !== 'playing') return;
+      
+      // Auto-regeneration when not in combat
+      if (!inCombat && currentLocation?.type === 'rest') {
+        setPlayer(prev => {
+          const newHp = Math.min(prev.hp + (currentLocation.rewards.hpRegen || 1), prev.maxHp);
+          const newMana = Math.min(prev.mana + (currentLocation.rewards.manaRegen || 1), prev.maxMana);
+          return { ...prev, hp: newHp, mana: newMana };
+        });
+      }
+      
+      // Auto-combat logic
+      if (inCombat && autoAttack && currentEnemy) {
+        handleCombatTurn();
+      }
+    }, 1000);
+    
+    return () => clearInterval(gameInterval);
+  }, [gameState, inCombat, autoAttack, currentEnemy, currentLocation]);
+  
+  // Handle combat turn
+  const handleCombatTurn = () => {
+    // Player attacks enemy
+    const playerDamage = calculateDamage(player, currentEnemy);
+    const newEnemyHp = Math.max(0, currentEnemy.hp - playerDamage);
+    
+    // Add to combat log
+    const newLog = [...combatLog];
+    newLog.push(`You hit ${currentEnemy.name} for ${playerDamage} damage.`);
+    
+    // Check if enemy is defeated
+    if (newEnemyHp <= 0) {
+      newLog.push(`You defeated ${currentEnemy.name}!`);
+      newLog.push(`You gained ${currentEnemy.xp} XP and ${currentEnemy.gold} gold.`);
+      
+      // Update player XP and gold
+      handleEnemyDefeated(currentEnemy);
+      
+      // End combat
+      setInCombat(false);
+      setCurrentEnemy(null);
+      setCombatLog(newLog.slice(-10)); // Keep only the last 10 messages
+      return;
+    }
+    
+    // Enemy attacks player
+    const enemyDamage = calculateDamage(currentEnemy, player);
+    const newPlayerHp = Math.max(0, player.hp - enemyDamage);
+    
+    newLog.push(`${currentEnemy.name} hits you for ${enemyDamage} damage.`);
+    
+    // Check if player is defeated
+    if (newPlayerHp <= 0) {
+      newLog.push(`You have been defeated! You lost some XP and gold.`);
+      handlePlayerDefeated();
+      setInCombat(false);
+      setCurrentEnemy(null);
+      setCombatLog(newLog.slice(-10));
+      return;
+    }
+    
+    // Update state
+    setCurrentEnemy({...currentEnemy, hp: newEnemyHp});
+    setPlayer(prev => ({...prev, hp: newPlayerHp}));
+    setCombatLog(newLog.slice(-10));
+  };
+  
+  // Calculate damage
+  const calculateDamage = (attacker, defender) => {
+    let damage = attacker.damage;
+    // Subtract defense, but ensure at least 1 damage
+    damage = Math.max(1, damage - (defender.defense || 0));
+    
+    // Check for critical hit (player only)
+    if (attacker.critChance && Math.random() * 100 < attacker.critChance) {
+      damage = Math.floor(damage * 1.5);
+    }
+    
+    return damage;
+  };
+  
+  // Handle enemy defeated
+  const handleEnemyDefeated = (enemy) => {
+    setPlayer(prev => {
+      const newXp = prev.xp + enemy.xp;
+      const newGold = prev.gold + enemy.gold;
+      
+      // Check for level up
+      if (newXp >= prev.xpToLevel) {
+        return handleLevelUp({...prev, xp: newXp, gold: newGold});
+      }
+      
+      return {...prev, xp: newXp, gold: newGold};
+    });
+  };
+  
+  // Handle level up
+  const handleLevelUp = (updatedPlayer) => {
+    const newLevel = updatedPlayer.level + 1;
+    const newXpToLevel = calculateXpToLevel(newLevel);
+    
+    // Increase stats based on class
+    const classData = CLASSES.find(c => c.id === updatedPlayer.class);
+    const statIncrease = {
+      strength: updatedPlayer.class === 'fighter' ? 2 : 1,
+      dexterity: updatedPlayer.class === 'rogue' ? 2 : 1,
+      constitution: 1,
+      intelligence: updatedPlayer.class === 'wizard' ? 2 : 1,
+      wisdom: updatedPlayer.class === 'cleric' ? 2 : 1,
+      charisma: 1
+    };
+    
+    // Check for new skills
+    const newSkills = [...updatedPlayer.skills];
+    const availableSkills = SKILLS[updatedPlayer.class];
+    
+    availableSkills.forEach(skill => {
+      if (skill.level === newLevel) {
+        newSkills.push(skill);
+      }
+    });
+    
+    // Update player
+    const newMaxHp = updatedPlayer.maxHp + 5 + Math.floor(statIncrease.constitution / 2);
+    const newMaxMana = updatedPlayer.maxMana + 3 + Math.floor((statIncrease.intelligence + statIncrease.wisdom) / 2);
+    
+    return {
+      ...updatedPlayer,
+      level: newLevel,
+      xpToLevel: newXpToLevel,
+      maxHp: newMaxHp,
+      hp: newMaxHp, // Fully heal on level up
+      maxMana: newMaxMana,
+      mana: newMaxMana, // Fully restore mana on level up
+      stats: {
+        strength: updatedPlayer.stats.strength + statIncrease.strength,
+        dexterity: updatedPlayer.stats.dexterity + statIncrease.dexterity,
+        constitution: updatedPlayer.stats.constitution + statIncrease.constitution,
+        intelligence: updatedPlayer.stats.intelligence + statIncrease.intelligence,
+        wisdom: updatedPlayer.stats.wisdom + statIncrease.wisdom,
+        charisma: updatedPlayer.stats.charisma + statIncrease.charisma
+      },
+      damage: updatedPlayer.damage + Math.floor(statIncrease.strength / 2),
+      defense: updatedPlayer.defense + Math.floor(statIncrease.constitution / 3),
+      skills: newSkills
+    };
+  };
+  
+  // Handle player defeated
+  const handlePlayerDefeated = () => {
+    setPlayer(prev => {
+      // Lose 10% of XP and gold
+      const lostXp = Math.floor(prev.xp * 0.1);
+      const lostGold = Math.floor(prev.gold * 0.1);
+      
+      return {
+        ...prev,
+        hp: Math.floor(prev.maxHp * 0.5), // Revive with 50% HP
+        xp: Math.max(0, prev.xp - lostXp),
+        gold: Math.max(0, prev.gold - lostGold)
+      };
+    });
+    
+    // Return to tavern
+    setCurrentLocation(LOCATIONS.find(loc => loc.id === 'tavern'));
+  };
+  
+  // Start adventure at location
+  const startAdventure = (locationId) => {
+    const location = LOCATIONS.find(loc => loc.id === locationId);
+    
+    if (!location) return;
+    
+    // Check if player meets the level requirement
+    if (player.level < location.minLevel) {
+      alert(`You need to be level ${location.minLevel} to enter ${location.name}.`);
+      return;
+    }
+    
+    // Update current location
+    setCurrentLocation(location);
+    
+    // If it's an adventure location, start combat
+    if (location.type === 'adventure') {
+      startCombat(location);
+    }
+  };
+  
+  // Start combat
+  const startCombat = (location) => {
+    if (!location.enemies || location.enemies.length === 0) return;
+    
+    // Select random enemy from location
+    const enemyId = location.enemies[Math.floor(Math.random() * location.enemies.length)];
+    const enemyTemplate = ENEMIES[enemyId];
+    
+    if (!enemyTemplate) return;
+    
+    // Create enemy instance with scaled stats based on player level
+    const levelScaling = 1 + (player.level - location.minLevel) * 0.2;
+    const enemy = {
+      ...enemyTemplate,
+      hp: Math.floor(enemyTemplate.hp * levelScaling),
+      damage: Math.floor(enemyTemplate.damage * levelScaling),
+      xp: Math.floor(enemyTemplate.xp * levelScaling),
+      gold: Math.floor(enemyTemplate.gold * levelScaling)
+    };
+    
+    // Start combat
+    setCurrentEnemy(enemy);
+    setInCombat(true);
+    setCombatLog([`You encounter a ${enemy.name}!`]);
+  };
+  
+  // Buy item
+  const buyItem = (itemType, itemId) => {
+    const item = ITEMS[itemType].find(i => i.id === itemId);
+    
+    if (!item) return;
+    
+    // Check if player meets requirements
+    if (player.level < item.requiredLevel) {
+      alert(`You need to be level ${item.requiredLevel} to buy ${item.name}.`);
+      return;
+    }
+    
+    // Check if player has enough gold
+    if (player.gold < item.cost) {
+      alert(`You don't have enough gold to buy ${item.name}.`);
+      return;
+    }
+    
+    // Handle different item types
+    if (itemType === 'weapons' || itemType === 'armor') {
+      // Equipment replaces existing item
+      const slot = itemType === 'weapons' ? 'weapon' : 'armor';
+      
+      setPlayer(prev => ({
+        ...prev,
+        gold: prev.gold - item.cost,
+        equipment: {
+          ...prev.equipment,
+          [slot]: item
+        },
+        // Update stats
+        damage: itemType === 'weapons' ? 
+          (prev.damage - (prev.equipment[slot]?.damage || 0) + item.damage) : 
+          prev.damage,
+        defense: itemType === 'armor' ? 
+          (prev.defense - (prev.equipment[slot]?.defense || 0) + item.defense) : 
+          prev.defense
+      }));
+    } else if (itemType === 'potions') {
+      // Add to inventory
+      setPlayer(prev => {
+        const updatedPotions = [...prev.inventory.potions, item];
+        return {
+          ...prev,
+          gold: prev.gold - item.cost,
+          inventory: {
+            ...prev.inventory,
+            potions: updatedPotions
+          }
         };
-
-        // Game state
-        let canvas, ctx;
-        let grid = []; // This will be a sparse array for memory efficiency
-        let terrainGrid = []; // Store terrain information
-        let players = [];
-        let playerIndex = -1;
-        let gameRunning = false;
-        let mouseX = 0, mouseY = 0;
-        let viewX = 0, viewY = 0;
-        let zoom = 1;
-        let boats = []; // For boat units
+      });
+    }
+  };
+  
+  // Use potion
+  const usePotion = (potionIndex) => {
+    const potion = player.inventory.potions[potionIndex];
+    
+    if (!potion) return;
+    
+    // Apply potion effects
+    setPlayer(prev => {
+      // Create updated inventory without the used potion
+      const updatedPotions = [...prev.inventory.potions];
+      updatedPotions.splice(potionIndex, 1);
+      
+      // Apply effects
+      const newHp = Math.min(prev.hp + (potion.effect.hp || 0), prev.maxHp);
+      const newMana = Math.min(prev.mana + (potion.effect.mana || 0), prev.maxMana);
+      
+      return {
+        ...prev,
+        hp: newHp,
+        mana: newMana,
+        inventory: {
+          ...prev.inventory,
+          potions: updatedPotions
+        }
+      };
+    });
+    
+    // Add to combat log if in combat
+    if (inCombat) {
+      setCombatLog(prev => [...prev, `You used a ${potion.name}.`].slice(-10));
+    }
+  };
+  
+  // Use skill
+  const useSkill = (skillId) => {
+    const skill = player.skills.find(s => s.id === skillId);
+    
+    if (!skill) return;
+    
+    // Implement skill effects based on ID
+    // This would be more complex in a real game
+    if (skill.id === 'second_wind') {
+      const healAmount = Math.floor(player.maxHp * 0.25);
+      setPlayer(prev => ({
+        ...prev,
+        hp: Math.min(prev.hp + healAmount, prev.maxHp)
+      }));
+      
+      if (inCombat) {
+        setCombatLog(prev => [...prev, `You used Second Wind and healed for ${healAmount} HP.`].slice(-10));
+      }
+    } else if (skill.id === 'magic_missile') {
+      if (!inCombat || !currentEnemy) return;
+      
+      const damage = 15; // Ignores defense
+      const newEnemyHp = Math.max(0, currentEnemy.hp - damage);
+      
+      setCurrentEnemy({...currentEnemy, hp: newEnemyHp});
+      setCombatLog(prev => [...prev, `You cast Magic Missile for ${damage} damage!`].slice(-10));
+      
+      if (newEnemyHp <= 0) {
+        handleEnemyDefeated(currentEnemy);
+        setInCombat(false);
+        setCurrentEnemy(null);
+      }
+    }
+    
+    // In a full game, we'd implement all skills and track cooldowns
+  };
+  
+  // Create a new character
+  const createCharacter = (name, classId) => {
+    const classData = CLASSES.find(c => c.id === classId);
+    
+    if (!classData) return;
+    
+    // Apply class bonuses
+    const newPlayer = {
+      ...player,
+      name: name,
+      class: classId,
+      stats: {
+        strength: player.stats.strength + (classData.bonuses.strength || 0),
+        dexterity: player.stats.dexterity + (classData.bonuses.dexterity || 0),
+        constitution: player.stats.constitution + (classData.bonuses.constitution || 0),
+        intelligence: player.stats.intelligence + (classData.bonuses.intelligence || 0),
+        wisdom: player.stats.wisdom + (classData.bonuses.wisdom || 0),
+        charisma: player.stats.charisma + (classData.bonuses.charisma || 0)
+      },
+      maxHp: player.maxHp + (classData.bonuses.maxHp || 0),
+      hp: player.maxHp + (classData.bonuses.maxHp || 0),
+      maxMana: player.maxMana + (classData.bonuses.mana || 0),
+      mana: player.maxMana + (classData.bonuses.mana || 0),
+      damage: player.damage + (classData.bonuses.damage || 0),
+      defense: player.defense + (classData.bonuses.defenseBonus || 0),
+      critChance: player.critChance + (classData.bonuses.critChance || 0)
+    };
+    
+    setPlayer(newPlayer);
+    setGameState('playing');
+    
+    // Start at the tavern
+    setCurrentLocation(LOCATIONS.find(loc => loc.id === 'tavern'));
+  };
+  
+  // Render intro screen
+  const renderIntro = () => (
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-8">
+      <h1 className="text-4xl font-bold mb-6">D&D Idle Adventure</h1>
+      <p className="text-lg mb-8 text-center max-w-lg">
+        Embark on an epic journey through dungeons and dragons in this idle RPG adventure. 
+        Battle monsters, collect loot, and become a legendary hero!
+      </p>
+      <button 
+        className="px-6 py-3 bg-red-700 hover:bg-red-600 rounded-lg font-bold text-lg transition-colors"
+        onClick={() => setGameState('character_creation')}
+      >
+        Start Your Adventure
+      </button>
+    </div>
+  );
+  
+  // Render character creation
+  const renderCharacterCreation = () => {
+    const [name, setName] = useState('');
+    const [selectedClass, setSelectedClass] = useState('');
+    
+    return (
+      <div className="min-h-screen bg-gray-900 text-white p-8">
+        <h1 className="text-3xl font-bold mb-6 text-center">Create Your Character</h1>
         
-        // Initialize the game
-        function init() {
-            canvas = document.getElementById('gameCanvas');
-            ctx = canvas.getContext('2d');
-            
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            
-            canvas.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-            
-            canvas.addEventListener('click', handleClick);
-            
-            document.getElementById('startButton').addEventListener('click', startGame);
-            document.getElementById('nameInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') startGame();
-            });
-        }
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        
-        function createGrid() {
-            // Initialize grid and terrain as sparse arrays for memory efficiency
-            grid = {};
-            terrainGrid = {};
-            
-            // Generate terrain using a chunked approach
-            generateTerrain();
-        }
-        
-        function generateTerrain() {
-            // Generate terrain in the visible area first
-            const centerX = Math.floor(VISIBLE_GRID_SIZE / 2);
-            const centerY = Math.floor(VISIBLE_GRID_SIZE / 2);
-            
-            // Use simplex noise-like approach for terrain generation
-            for (let y = 0; y < VISIBLE_GRID_SIZE; y++) {
-                for (let x = 0; x < VISIBLE_GRID_SIZE; x++) {
-                    const worldX = x + centerX - Math.floor(VISIBLE_GRID_SIZE / 2);
-                    const worldY = y + centerY - Math.floor(VISIBLE_GRID_SIZE / 2);
-                    
-                    // Initialize grid cell if needed
-                    if (!grid[worldY]) grid[worldY] = {};
-                    if (!terrainGrid[worldY]) terrainGrid[worldY] = {};
-                    
-                    // Generate terrain type
-                    const terrain = generateTerrainAt(worldX, worldY);
-                    terrainGrid[worldY][worldX] = terrain;
-                    
-                    // Initialize ownership
-                    grid[worldY][worldX] = {
-                        owner: -1,
-                        strength: 0
-                    };
-                }
-            }
-        }
-        
-        function generateTerrainAt(x, y) {
-            // Simple deterministic noise function
-            const noiseValue = Math.sin(x * 0.01) * Math.sin(y * 0.01) + 
-                               Math.sin(x * 0.02 + y * 0.01) * 0.5 + 
-                               Math.sin(x * 0.03 + y * 0.02) * 0.25;
-            
-            if (noiseValue < -0.3) {
-                return TERRAIN.WATER; // Deep water
-            } else if (noiseValue < 0.1) {
-                return TERRAIN.WATER; // Shallow water
-            } else if (noiseValue > 0.8) {
-                return TERRAIN.MOUNTAIN; // Mountains
-            } else {
-                return TERRAIN.LAND; // Land
-            }
-        }
-        
-        // Load or generate terrain on demand
-        function ensureTerrainLoaded(x, y) {
-            if (!terrainGrid[y] || terrainGrid[y][x] === undefined) {
-                if (!terrainGrid[y]) terrainGrid[y] = {};
-                terrainGrid[y][x] = generateTerrainAt(x, y);
-            }
-            
-            if (!grid[y] || grid[y][x] === undefined) {
-                if (!grid[y]) grid[y] = {};
-                grid[y][x] = {
-                    owner: -1,
-                    strength: 0
-                };
-            }
-            
-            return terrainGrid[y][x];
-        }
-        }
-        
-        function createPlayers() {
-            players = [];
-            
-            // Create human player
-            const playerName = document.getElementById('nameInput').value.trim() || "Player";
-            players.push({
-                name: playerName,
-                color: COLORS[0],
-                territory: 0,
-                alive: true,
-                isAI: false,
-                hasBoats: false
-            });
-            
-            // Create AI players with random names
-            for (let i = 0; i < AI_PLAYER_COUNT; i++) {
-                const namePrefix = NAME_PREFIXES[Math.floor(Math.random() * NAME_PREFIXES.length)];
-                const nameSuffix = NAME_SUFFIXES[Math.floor(Math.random() * NAME_SUFFIXES.length)];
-                const aiName = `${namePrefix} ${nameSuffix}`;
-                
-                players.push({
-                    name: aiName,
-                    color: COLORS[(i + 1) % COLORS.length],
-                    territory: 0,
-                    alive: true,
-                    isAI: true,
-                    aiTarget: { x: 0, y: 0 },
-                    aiNextTargetTime: 0,
-                    aiAggressiveness: 0.5 + Math.random() * 0.5, // Random AI personality
-                    hasBoats: false
-                });
-            }
-            
-            // Assign random starting territories on land only
-            for (let i = 0; i < players.length; i++) {
-                let startX, startY;
-                let placed = false;
-                let attempts = 0;
-                
-                // Try to find an empty spot on land
-                while (!placed && attempts < 1000) {
-                    attempts++;
-                    
-                    // Find random coordinates within the visible grid for performance
-                    startX = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
-                    startY = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
-                    
-                    // Check if this is valid land
-                    let isValidStart = true;
-                    for (let y = startY - 2; y <= startY + 2; y++) {
-                        for (let x = startX - 2; x <= startX + 2; x++) {
-                            // Load terrain if needed
-                            const terrain = ensureTerrainLoaded(x, y);
-                            
-                            // Check if land and not occupied
-                            if (terrain !== TERRAIN.LAND || 
-                                (grid[y] && grid[y][x] && grid[y][x].owner !== -1)) {
-                                isValidStart = false;
-                                break;
-                            }
-                        }
-                        if (!isValidStart) break;
-                    }
-                    
-                    if (isValidStart) {
-                        // Place initial territory (5x5)
-                        for (let y = startY - 2; y <= startY + 2; y++) {
-                            for (let x = startX - 2; x <= startX + 2; x++) {
-                                if (!grid[y]) grid[y] = {};
-                                grid[y][x] = {
-                                    owner: i,
-                                    strength: 50
-                                };
-                            }
-                        }
-                        placed = true;
-                        
-                        // Center the view on the player's territory
-                        if (i === 0) {
-                            viewX = startX * CELL_SIZE - canvas.width / 2;
-                            viewY = startY * CELL_SIZE - canvas.height / 2;
-                        }
-                    }
-                }
-                
-                // If couldn't place after many attempts, try one last time with less constraints
-                if (!placed) {
-                    console.log(`Failed to place player ${i} after many attempts, trying with fewer constraints`);
-                    
-                    while (!placed) {
-                        startX = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
-                        startY = Math.floor(Math.random() * VISIBLE_GRID_SIZE);
-                        
-                        // Check just the center tile
-                        ensureTerrainLoaded(startX, startY);
-                        
-                        if (terrainGrid[startY][startX] === TERRAIN.LAND && 
-                            (!grid[startY] || !grid[startY][startX] || grid[startY][startX].owner === -1)) {
-                            
-                            // Just place a single tile
-                            if (!grid[startY]) grid[startY] = {};
-                            grid[startY][startX] = {
-                                owner: i,
-                                strength: 100
-                            };
-                            placed = true;
-                            
-                            // Center view if player
-                            if (i === 0) {
-                                viewX = startX * CELL_SIZE - canvas.width / 2;
-                                viewY = startY * CELL_SIZE - canvas.height / 2;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        
-        function startGame() {
-            createGrid();
-            createPlayers();
-            
-            document.getElementById('startScreen').style.display = 'none';
-            gameRunning = true;
-            playerIndex = 0;
-            
-            // Start the game loop
-            requestAnimationFrame(gameLoop);
-        }
-        
-        function handleClick(e) {
-            if (!gameRunning || playerIndex === -1 || !players[playerIndex].alive) return;
-            
-            // Convert screen coordinates to grid coordinates
-            const gridX = Math.floor((e.clientX + viewX) / CELL_SIZE);
-            const gridY = Math.floor((e.clientY + viewY) / CELL_SIZE);
-            
-            // Validate coordinates
-            if (gridX < 0 || gridX >= GRID_SIZE || gridY < 0 || gridY >= GRID_SIZE) return;
-            
-            // Send troops to the clicked location
-            sendPlayerTroops(gridX, gridY);
-        }
-        
-        function sendPlayerTroops(targetX, targetY) {
-            // Check if target is in the grid
-            if (targetX < 0 || targetX >= GRID_SIZE || targetY < 0 || targetY >= GRID_SIZE) {
-                return;
-            }
-            
-            // Ensure terrain is loaded for target
-            ensureTerrainLoaded(targetX, targetY);
-            
-            // Find the player's territory cells in the visible area for performance
-            const territoryCells = [];
-            const viewStartX = Math.floor(viewX / CELL_SIZE);
-            const viewStartY = Math.floor(viewY / CELL_SIZE);
-            const viewEndX = Math.ceil((viewX + canvas.width) / CELL_SIZE);
-            const viewEndY = Math.ceil((viewY + canvas.height) / CELL_SIZE);
-            
-            for (let y = viewStartY; y < viewEndY; y++) {
-                if (!grid[y]) continue;
-                
-                for (let x = viewStartX; x < viewEndX; x++) {
-                    if (grid[y][x] && grid[y][x].owner === playerIndex) {
-                        territoryCells.push({ x, y });
-                    }
-                }
-            }
-            
-            // Sort cells by distance to the target
-            territoryCells.sort((a, b) => {
-                const distA = Math.hypot(a.x - targetX, a.y - targetY);
-                const distB = Math.hypot(b.x - targetX, b.y - targetY);
-                return distA - distB;
-            });
-            
-            // Get target terrain
-            const targetTerrain = terrainGrid[targetY] && terrainGrid[targetY][targetX] 
-                ? terrainGrid[targetY][targetX] : ensureTerrainLoaded(targetX, targetY);
-            
-            // Send troops (move half of the strength from each cell)
-            let troopsSent = false;
-            
-            territoryCells.forEach(cell => {
-                if (!grid[cell.y] || !grid[cell.y][cell.x]) return;
-                
-                const cellTerrain = terrainGrid[cell.y] && terrainGrid[cell.y][cell.x]
-                    ? terrainGrid[cell.y][cell.x] : ensureTerrainLoaded(cell.x, cell.y);
-                
-                const strength = grid[cell.y][cell.x].strength;
-                const troopStrength = Math.floor(strength / 2);
-                
-                if (troopStrength > 0) {
-                    grid[cell.y][cell.x].strength -= troopStrength;
-                    
-                    // Check if we need to create a boat
-                    const needsBoat = (targetTerrain === TERRAIN.WATER && cellTerrain === TERRAIN.LAND) ||
-                                     (targetTerrain === TERRAIN.LAND && cellTerrain === TERRAIN.WATER);
-                    
-                    if (needsBoat && players[playerIndex].hasBoats) {
-                        // Create a boat unit
-                        createBoat(cell.x, cell.y, targetX, targetY, troopStrength, playerIndex);
-                        troopsSent = true;
-                    } else if (targetTerrain === TERRAIN.WATER && !players[playerIndex].hasBoats) {
-                        // Can't send troops to water without boats
-                        grid[cell.y][cell.x].strength += troopStrength; // Refund troops
-                    } else {
-                        // Create a normal land path
-                        createTroopPath(cell.x, cell.y, targetX, targetY, troopStrength, playerIndex);
-                        troopsSent = true;
-                    }
-                }
-            });
-            
-            // Research boats if we tried to send troops to water
-            if (targetTerrain === TERRAIN.WATER && !players[playerIndex].hasBoats && troopsSent) {
-                // If player tried to target water, automatically research boats
-                researchBoats(playerIndex);
-            }
-        }
-        
-        function createBoat(startX, startY, endX, endY, strength, owner) {
-            boats.push({
-                x: startX,
-                y: startY,
-                targetX: endX,
-                targetY: endY,
-                strength: strength,
-                owner: owner,
-                speed: 0.5, // Boats move slower
-                progress: 0
-            });
-        }
-        
-        function researchBoats(playerIdx) {
-            if (players[playerIdx].hasBoats) return;
-            
-            // Unlock boats for this player
-            players[playerIdx].hasBoats = true;
-            
-            // Notify player
-            if (playerIdx === playerIndex) {
-                const notification = document.createElement('div');
-                notification.textContent = "Boats researched! You can now cross water.";
-                notification.style.position = 'absolute';
-                notification.style.bottom = '20px';
-                notification.style.left = '50%';
-                notification.style.transform = 'translateX(-50%)';
-                notification.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-                notification.style.color = 'white';
-                notification.style.padding = '10px 20px';
-                notification.style.borderRadius = '5px';
-                notification.style.zIndex = '1000';
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transition = 'opacity 1s';
-                    setTimeout(() => notification.remove(), 1000);
-                }, 3000);
-            }
-        }
-        }
-        
-        function createTroopPath(startX, startY, endX, endY, strength) {
-            // Simplified troop movement - move in a straight line
-            const dx = endX - startX;
-            const dy = endY - startY;
-            const distance = Math.hypot(dx, dy);
-            
-            if (distance === 0) return;
-            
-            const stepX = dx / distance;
-            const stepY = dy / distance;
-            
-            let x = startX;
-            let y = startY;
-            
-            const moveStep = () => {
-                x += stepX;
-                y += stepY;
-                
-                const gridX = Math.floor(x);
-                const gridY = Math.floor(y);
-                
-                if (gridX >= 0 && gridX < GRID_SIZE && gridY >= 0 && gridY < GRID_SIZE) {
-                    const cell = grid[gridY][gridX];
-                    
-                    if (cell.owner === playerIndex) {
-                        // Add strength to own territory
-                        cell.strength += strength;
-                    } else if (cell.owner === -1) {
-                        // Claim empty territory
-                        cell.owner = playerIndex;
-                        cell.strength = strength;
-                    } else {
-                        // Battle with enemy territory
-                        if (cell.strength < strength) {
-                            // Victory - take over the territory
-                            cell.owner = playerIndex;
-                            cell.strength = strength - cell.strength;
-                        } else {
-                            // Defeat - reduce enemy strength
-                            cell.strength -= strength;
-                        }
-                    }
-                }
-                
-                // Continue movement if not reached target
-                if (Math.abs(gridX - endX) > 1 || Math.abs(gridY - endY) > 1) {
-                    setTimeout(moveStep, 100);
-                }
-            };
-            
-            // Start movement
-            setTimeout(moveStep, 100);
-        }
-        
-        function updateAI() {
-            const now = Date.now();
-            
-            for (let i = 1; i < players.length; i++) {
-                const player = players[i];
-                
-                if (!player.alive || !player.isAI) continue;
-                
-                // Update AI target periodically
-                if (now >= player.aiNextTargetTime) {
-                    // Choose a new target
-                    player.aiNextTargetTime = now + 5000 + Math.random() * 10000;
-                    
-                    // Find own territory center
-                    let centerX = 0, centerY = 0, count = 0;
-                    
-                    for (let y = 0; y < GRID_SIZE; y++) {
-                        for (let x = 0; x < GRID_SIZE; x++) {
-                            if (grid[y][x].owner === i) {
-                                centerX += x;
-                                centerY += y;
-                                count++;
-                            }
-                        }
-                    }
-                    
-                    if (count > 0) {
-                        centerX = Math.floor(centerX / count);
-                        centerY = Math.floor(centerY / count);
-                        
-                        // Choose a random direction to expand
-                        const angle = Math.random() * Math.PI * 2;
-                        const distance = 10 + Math.random() * 15;
-                        
-                        player.aiTarget = {
-                            x: Math.floor(centerX + Math.cos(angle) * distance),
-                            y: Math.floor(centerY + Math.sin(angle) * distance)
-                        };
-                        
-                        // Clamp to grid bounds
-                        player.aiTarget.x = Math.max(0, Math.min(GRID_SIZE - 1, player.aiTarget.x));
-                        player.aiTarget.y = Math.max(0, Math.min(GRID_SIZE - 1, player.aiTarget.y));
-                        
-                        // Send troops to target
-                        aiSendTroops(i, player.aiTarget.x, player.aiTarget.y);
-                    }
-                }
-            }
-        }
-        
-        function aiSendTroops(ai, targetX, targetY) {
-            // Similar to player troop sending but for AI
-            const territoryCells = [];
-            
-            for (let y = 0; y < GRID_SIZE; y++) {
-                for (let x = 0; x < GRID_SIZE; x++) {
-                    if (grid[y][x].owner === ai) {
-                        territoryCells.push({ x, y });
-                    }
-                }
-            }
-            
-            // Sort by distance
-            territoryCells.sort((a, b) => {
-                const distA = Math.hypot(a.x - targetX, a.y - targetY);
-                const distB = Math.hypot(b.x - targetX, b.y - targetY);
-                return distA - distB;
-            });
-            
-            // Send only from the nearest cells (optimization)
-            const sendLimit = Math.min(territoryCells.length, 30);
-            
-            for (let i = 0; i < sendLimit; i++) {
-                const cell = territoryCells[i];
-                const strength = grid[cell.y][cell.x].strength;
-                const troopStrength = Math.floor(strength * 0.3); // AI sends fewer troops
-                
-                if (troopStrength > 0) {
-                    grid[cell.y][cell.x].strength -= troopStrength;
-                    createAITroopPath(ai, cell.x, cell.y, targetX, targetY, troopStrength);
-                }
-            }
-        }
-        
-        function createAITroopPath(ai, startX, startY, endX, endY, strength) {
-            // Similar to player troop path but for AI
-            const dx = endX - startX;
-            const dy = endY - startY;
-            const distance = Math.hypot(dx, dy);
-            
-            if (distance === 0) return;
-            
-            const stepX = dx / distance;
-            const stepY = dy / distance;
-            
-            let x = startX;
-            let y = startY;
-            
-            const moveStep = () => {
-                x += stepX;
-                y += stepY;
-                
-                const gridX = Math.floor(x);
-                const gridY = Math.floor(y);
-                
-                if (gridX >= 0 && gridX < GRID_SIZE && gridY >= 0 && gridY < GRID_SIZE) {
-                    const cell = grid[gridY][gridX];
-                    
-                    if (cell.owner === ai) {
-                        cell.strength += strength;
-                    } else if (cell.owner === -1) {
-                        cell.owner = ai;
-                        cell.strength = strength;
-                    } else {
-                        if (cell.strength < strength) {
-                            cell.owner = ai;
-                            cell.strength = strength - cell.strength;
-                        } else {
-                            cell.strength -= strength;
-                        }
-                    }
-                }
-                
-                if (Math.abs(gridX - endX) > 1 || Math.abs(gridY - endY) > 1) {
-                    setTimeout(moveStep, 150); // AI troops move slower
-                }
-            };
-            
-            setTimeout(moveStep, 150);
-        }
-        
-        function updateTerritory() {
-            // Reset territory counts
-            players.forEach(player => {
-                player.territory = 0;
-                player.alive = false;
-            });
-            
-            // Count territories in visible area (we'll use this as a sample)
-            let totalClaimed = 0;
-            const viewStartX = Math.floor(viewX / CELL_SIZE);
-            const viewStartY = Math.floor(viewY / CELL_SIZE);
-            const viewEndX = Math.ceil((viewX + canvas.width) / CELL_SIZE);
-            const viewEndY = Math.ceil((viewY + canvas.height) / CELL_SIZE);
-            
-            for (let y = viewStartY; y < viewEndY; y++) {
-                if (!grid[y]) continue;
-                
-                for (let x = viewStartX; x < viewEndX; x++) {
-                    if (grid[y][x] && grid[y][x].owner !== -1) {
-                        players[grid[y][x].owner].territory++;
-                        players[grid[y][x].owner].alive = true;
-                        totalClaimed++;
-                    }
-                }
-            }
-            
-            // Convert to percentages (using visible area as a sample)
-            const visibleArea = (viewEndX - viewStartX) * (viewEndY - viewStartY);
-            if (totalClaimed > 0) {
-                players.forEach(player => {
-                    player.territory = player.territory / visibleArea * 100;
-                });
-            }
-            
-            // Natural strength growth for territories in visible area
-            for (let y = viewStartY; y < viewEndY; y++) {
-                if (!grid[y]) continue;
-                
-                for (let x = viewStartX; x < viewEndX; x++) {
-                    if (grid[y][x] && grid[y][x].owner !== -1) {
-                        // Growth rate depends on terrain
-                        const terrain = terrainGrid[y] && terrainGrid[y][x] 
-                            ? terrainGrid[y][x] : ensureTerrainLoaded(x, y);
-                        
-                        let growthRate = 0.1;
-                        if (terrain === TERRAIN.LAND) {
-                            growthRate = 0.15; // Better growth on land
-                        } else if (terrain === TERRAIN.WATER) {
-                            growthRate = 0.05; // Slower growth on water
-                        } else if (terrain === TERRAIN.MOUNTAIN) {
-                            growthRate = 0.2; // Best growth on mountains
-                        }
-                        
-                        grid[y][x].strength += growthRate;
-                    }
-                }
-            }
-            
-            // Update boats
-            updateBoats();
-            
-            // Update UI
-            updateUI();
-        }
-        
-        function updateBoats() {
-            for (let i = boats.length - 1; i >= 0; i--) {
-                const boat = boats[i];
-                
-                // Move boat towards target
-                const dx = boat.targetX - boat.x;
-                const dy = boat.targetY - boat.y;
-                const distance = Math.hypot(dx, dy);
-                
-                if (distance < 0.1) {
-                    // Boat reached destination
-                    ensureTerrainLoaded(Math.floor(boat.targetX), Math.floor(boat.targetY));
-                    
-                    if (!grid[Math.floor(boat.targetY)]) {
-                        grid[Math.floor(boat.targetY)] = {};
-                    }
-                    
-                    const targetCell = grid[Math.floor(boat.targetY)][Math.floor(boat.targetX)];
-                    
-                    if (!targetCell) {
-                        grid[Math.floor(boat.targetY)][Math.floor(boat.targetX)] = {
-                            owner: boat.owner,
-                            strength: boat.strength
-                        };
-                    } else if (targetCell.owner === boat.owner) {
-                        targetCell.strength += boat.strength;
-                    } else if (targetCell.owner === -1) {
-                        targetCell.owner = boat.owner;
-                        targetCell.strength = boat.strength;
-                    } else {
-                        // Battle
-                        if (targetCell.strength < boat.strength) {
-                            targetCell.owner = boat.owner;
-                            targetCell.strength = boat.strength - targetCell.strength;
-                        } else {
-                            targetCell.strength -= boat.strength;
-                        }
-                    }
-                    
-                    // Remove boat
-                    boats.splice(i, 1);
-                } else {
-                    // Move boat
-                    boat.progress += boat.speed;
-                    if (boat.progress >= 1) {
-                        boat.progress = 0;
-                        
-                        boat.x += (dx / distance) * 1;
-                        boat.y += (dy / distance) * 1;
-                    }
-                }
-            }
-        }
-        
-        function updateUI() {
-            // Player info
-            if (playerIndex !== -1 && players[playerIndex]) {
-                document.getElementById('territorySize').textContent = players[playerIndex].territory.toFixed(1);
-            }
-            
-            // Player count
-            const alivePlayers = players.filter(p => p.alive).length;
-            document.getElementById('playerCount').textContent = alivePlayers;
-            
-            // Leaderboard
-            const leaderboardContent = document.getElementById('leaderboardContent');
-            leaderboardContent.innerHTML = '';
-            
-            // Sort players by territory
-            const sortedPlayers = [...players]
-                .filter(p => p.alive)
-                .sort((a, b) => b.territory - a.territory);
-            
-            for (let i = 0; i < Math.min(sortedPlayers.length, 10); i++) {
-                const player = sortedPlayers[i];
-                const isHuman = !player.isAI;
-                
-                const item = document.createElement('div');
-                item.className = 'leaderItem';
-                
-                const name = document.createElement('div');
-                name.textContent = player.name + (isHuman ? ' (You)' : '');
-                name.style.fontWeight = isHuman ? 'bold' : 'normal';
-                
-                const score = document.createElement('div');
-                score.textContent = player.territory.toFixed(1) + '%';
-                
-                const colorIndicator = document.createElement('div');
-                colorIndicator.style.width = '10px';
-                colorIndicator.style.height = '10px';
-                colorIndicator.style.backgroundColor = player.color;
-                colorIndicator.style.display = 'inline-block';
-                colorIndicator.style.marginRight = '5px';
-                
-                name.prepend(colorIndicator);
-                
-                item.appendChild(name);
-                item.appendChild(score);
-                leaderboardContent.appendChild(item);
-            }
-        }
-        
-        function render() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Calculate visible range
-            const startX = Math.floor(viewX / CELL_SIZE);
-            const startY = Math.floor(viewY / CELL_SIZE);
-            const endX = Math.ceil((viewX + canvas.width) / CELL_SIZE);
-            const endY = Math.ceil((viewY + canvas.height) / CELL_SIZE);
-            
-            // Draw grid
-            for (let y = Math.max(0, startY); y < Math.min(GRID_SIZE, endY); y++) {
-                for (let x = Math.max(0, startX); x < Math.min(GRID_SIZE, endX); x++) {
-                    const cell = grid[y][x];
-                    
-                    if (cell.owner !== -1) {
-                        const screenX = x * CELL_SIZE - viewX;
-                        const screenY = y * CELL_SIZE - viewY;
-                        
-                        ctx.fillStyle = players[cell.owner].color;
-                        ctx.fillRect(screenX, screenY, CELL_SIZE, CELL_SIZE);
-                        
-                        // Draw border for better visibility
-                        ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
-                        ctx.strokeRect(screenX, screenY, CELL_SIZE, CELL_SIZE);
-                    }
-                }
-            }
-            
-            // Draw grid lines
-            ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-            ctx.beginPath();
-            
-            for (let x = startX; x <= endX; x++) {
-                const screenX = x * CELL_SIZE - viewX;
-                ctx.moveTo(screenX, 0);
-                ctx.lineTo(screenX, canvas.height);
-            }
-            
-            for (let y = startY; y <= endY; y++) {
-                const screenY = y * CELL_SIZE - viewY;
-                ctx.moveTo(0, screenY);
-                ctx.lineTo(canvas.width, screenY);
-            }
-            
-            ctx.stroke();
-        }
-        
-        function gameLoop() {
-            if (gameRunning) {
-                // Pan the view based on mouse position
-                const panSpeed = 15;
-                const panMargin = 50;
-                
-                if (mouseX < panMargin) viewX -= panSpeed;
-                if (mouseX > canvas.width - panMargin) viewX += panSpeed;
-                if (mouseY < panMargin) viewY -= panSpeed;
-                if (mouseY > canvas.height - panMargin) viewY += panSpeed;
-                
-                // Clamp view to grid bounds
-                viewX = Math.max(0, Math.min(GRID_SIZE * CELL_SIZE - canvas.width, viewX));
-                viewY = Math.max(0, Math.min(GRID_SIZE * CELL_SIZE - canvas.height, viewY));
-                
-                // Update game state
-                updateTerritory();
-                updateAI();
-                
-                // Render
-                render();
-                
-                // Check for game over
-                if (playerIndex !== -1 && !players[playerIndex].alive) {
-                    gameOver("Defeat");
-                } else {
-                    const alivePlayers = players.filter(p => p.alive).length;
-                    if (alivePlayers === 1 && players[playerIndex].alive) {
-                        gameOver("Victory");
-                    }
-                }
-                
-                requestAnimationFrame(gameLoop);
-            }
-        }
-        
-        function gameOver(result) {
-            gameRunning = false;
-            
-            const startScreen = document.getElementById('startScreen');
-            startScreen.style.display = 'flex';
-            
-            const title = startScreen.querySelector('h1');
-            title.textContent = result === "Victory" ? "Victory!" : "Game Over";
-            
-            const input = document.getElementById('nameInput');
-            input.style.display = 'none';
-            
-            const button = document.getElementById('startButton');
-            button.textContent = "Play Again";
-            button.onclick = function() {
-                location.reload();
-            };
-        }
-        
-        // Start the game when the page loads
-        window.onload = init;
-    </script>
-</body>
-</html>
+        <div className="max-w-2xl mx-auto bg-gray-800 rounded-lg p-6">
+          <div className="mb-4">
+            <label className="block mb-2">Character Name:</label>
+            <input 
+              type="text" 
+              value={name} 
+              onChange={e => setName(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-700 rounded-md"
+            />
+          </div>
+          
+          <div className="mb-6">
+            <label className="block mb-2">Choose Your Class:</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {CLASSES.map(characterClass => (
+                <div 
+                  key={characterClass.id}
+                  className={`p-4 border rounded-lg cursor-pointer ${
+                    selectedClass === characterClass.id 
+                      ? 'border-yellow-500 bg-gray-700' 
+                      : 'border-gray-700 hover:bg-gray-700'
+                  }`}
+                  onClick={() => setSelectedClass(characterClass.id)}
+                >
+                  <div className="flex items-center mb-2">
+                    <characterClass.icon className="mr-2" size={20} />
+                    <h3 className="text-xl font-bold">{characterClass.name}</h3>
+                  </div>
+                  <p className="text-gray-300 text-sm mb-3">{characterClass.description}</p>
+                  <div className="text-sm">
+                    <p className="text-yellow-400">Class Bonuses:</p>
+                    <ul className="pl-4">
+                      {Object.entries(characterClass.bonuses).map(([key, value]) => (
+                        <li key={key}>{key.charAt(0).toUpperCase() + key.slice(1)}: +{value}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <button 
+              className={`px-6 py-3 rounded-lg font-bold text-lg ${
+                name && selectedClass 
+                  ? 'bg-green-600 hover:bg-green-500' 
+                  : 'bg-gray-600 cursor-not-allowed'
+              }`}
+              disabled={!name || !selectedClass}
+              onClick={() => createCharacter(name, selectedClass)}
+            >
+              Begin Adventure
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  // Render game interface
+  const renderGame
